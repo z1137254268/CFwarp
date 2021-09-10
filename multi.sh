@@ -664,7 +664,7 @@ green " 如上方显示IPV4地址：8.…………，则说明成功啦！\n 如
 }
 
 function upcore(){
-wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/ygkkk/CFwarp/upcore.sh&& chmod +x upcore.sh && ./upcore.sh
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/upcore.sh&& chmod +x upcore.sh && ./upcore.sh
 }
 
 function iptables(){
@@ -757,7 +757,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/ygkkk/CFwarp/ma
 }
 
 function up6(){
-echo -e nameserver 2a00:1098:2c::1 > /etc/resolv.conf
+echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2001:67c:2b0::4\nnameserver 2001:67c:2b0::6" > /etc/resolv.conf
 wget -6 -N --no-check-certificate https://raw.githubusercontent.com/ygkkk/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
 }
 
@@ -1181,7 +1181,7 @@ sudo reboot
 }
 
 function v6(){
-echo -e nameserver 2a00:1098:2c::1 > /etc/resolv.conf
+echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2001:67c:2b0::4\nnameserver 2001:67c:2b0::6" > /etc/resolv.conf
 cd /tmp
 wget --no-check-certificate -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.11/arm64/linux-headers-5.11.0-051100-generic_5.11.0-051100.202102142330_arm64.deb
 wget --no-check-certificate -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.11/arm64/linux-image-unsigned-5.11.0-051100-generic_5.11.0-051100.202102142330_arm64.deb 
