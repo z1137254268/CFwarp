@@ -2,7 +2,7 @@
 ## 支持kvm/xen/microsoft等架构VPS的WARP一键综合脚本
 
 - [x] 支持自动识别系统类型，CPU架构(X86/ARM)，内核版本，虚拟化架构类型！
-- [x] 支持纯IPV4，纯IPV6，双栈IPV4+IPV6 三大类VPS！
+- [x] 支持纯IPV4，纯IPV6，双栈IPV4+IPV6 三大类kvm VPS！
 - [x] 支持Ubuntu/Centos/Debain最新系统！
 - [x] 支持共9种形态的WARP形式，安装过程无需手动干预！
 - [x] 支持即时显示当前WARP状态与IP地址！
@@ -156,7 +156,7 @@ wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/multi.sh
 
 脚本13、结果表现为2个IP：VPS本地IPV6+WARP虚拟IPV4
 
-- **六、统一DNS功能（推荐有IPV4访问能力的VPS使用，可选）：**
+- **六、统一DNS功能（推荐有IPV4访问能力的VPS使用，建议出现vps失联后启用！）：**
 
 VPS可能会强制初始化DNS设置，使WARP设置的DNS失效，导致进入SSH后无法访问外网（如无此问题则无需选择执行）
 
