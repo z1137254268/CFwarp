@@ -753,12 +753,12 @@ systemctl status wg-quick@wgcf
 }
 
 function up4(){
-wget -N --no-check-certificate https://raw.githubusercontent.com/ygkkk/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
 }
 
 function up6(){
-echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2001:67c:2b0::4\nnameserver 2001:67c:2b0::6" > /etc/resolv.conf
-wget -6 -N --no-check-certificate https://raw.githubusercontent.com/ygkkk/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
+echo -e nameserver 2a0b:f4c0:4d:53::1 > /etc/resolv.conf
+wget -6 -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
 }
 
 #主菜单
@@ -1220,12 +1220,12 @@ systemctl status wg-quick@wgcf
 }
 
 function up4(){
-wget -N --no-check-certificate https://raw.githubusercontent.com/ygkkk/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
 }
 
 function up6(){
-echo -e nameserver 2a00:1098:2c::1 > /etc/resolv.conf
-wget -6 -N --no-check-certificate https://raw.githubusercontent.com/ygkkk/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
+echo -e nameserver 2a0b:f4c0:4d:53::1 > /etc/resolv.conf
+wget -6 -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
 }
 
 function wro646(){
