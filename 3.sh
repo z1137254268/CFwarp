@@ -197,8 +197,7 @@ echo $ABC3 | sh
 echo $ABC4 | sh
 echo $ABC5 | sh
 
-mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf
-mv -f wgcf-account.toml /etc/wireguard/wgcf-account.toml
+cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf
 
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
 
