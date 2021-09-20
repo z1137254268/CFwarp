@@ -51,6 +51,16 @@ modify3="sed -i '/0\.\0\/0/d' wgcf-profile.conf && sed -i 's/engage.cloudflarecl
 modify4='sed -i "7 s/^/PostUp = ip -4 rule add from $(ip route get 114.114.114.114 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "8 s/^/PostDown = ip -4 rule delete from $(ip route get 114.114.114.114 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i '"'s/engage.cloudflareclient.com/162.159.192.1/g' wgcf-profile.conf && sed -i 's/1.1.1.1/9.9.9.9,8.8.8.8,1.1.1.1/g' wgcf-profile.conf"
 modify5='sed -i "7 s/^/PostUp = ip -4 rule add from $(ip route get 114.114.114.114 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "8 s/^/PostDown = ip -4 rule delete from $(ip route get 114.114.114.114 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "9 s/^/PostUp = ip -6 rule add from $(ip route get 2400:3200::1 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "10 s/^/PostDown = ip -6 rule delete from $(ip route get 2400:3200::1 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i '"'s/engage.cloudflareclient.com/162.159.192.1/g' wgcf-profile.conf && sed -i 's/1.1.1.1/9.9.9.9,8.8.8.8,1.1.1.1/g' wgcf-profile.conf"
 
+ud4='sed -i "5 s/^/PostUp = ip -4 rule add from $(ip route get 114.114.114.114 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "6 s/^/PostDown = ip -4 rule delete from $(ip route get 114.114.114.114 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf'
+ud6='sed -i "7 s/^/PostUp = ip -6 rule add from $(ip route get 2400:3200::1 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "8 s/^/PostDown = ip -6 rule delete from $(ip route get 2400:3200::1 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf'
+ud4ud6='sed -i "5 s/^/PostUp = ip -4 rule add from $(ip route get 114.114.114.114 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "6 s/^/PostDown = ip -4 rule delete from $(ip route get 114.114.114.114 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "7 s/^/PostUp = ip -6 rule add from $(ip route get 2400:3200::1 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf && sed -i "8 s/^/PostDown = ip -6 rule delete from $(ip route get 2400:3200::1 | grep -oP '"'src \K\S+') lookup main\n/"'" wgcf-profile.conf'
+c1='sed -i '/0\.0\.0\.0\/0/d' wgcf-profile.conf'
+c2='sed -i '/\:\:\/0/d' wgcf-profile.conf'
+c3='sed -i 's/engage.cloudflareclient.com/162.159.192.1/g' wgcf-profile.conf'
+c4='sed -i 's/engage.cloudflareclient.com/[2606:4700:d0::a29f:c001]/g' wgcf-profile.conf'
+c5='sed -i 's/1.1.1.1/8.8.8.8,2001:4860:4860::8888/g' wgcf-profile.conf'
+c6='sed -i 's/1.1.1.1/2001:4860:4860::8888,8.8.8.8/g' wgcf-profile.conf'
+
 # VPS 当前状态
 status(){
 	clear
@@ -135,18 +145,15 @@ install(){
         chmod +x /usr/bin/wireguard-go
 
 	# 注册 WARP 账户 (将生成 wgcf-account.toml 文件保存账户信息，为避免文件已存在导致出错，先尝试删掉原文件)
-	rm -f wgcf-account.toml
-	yellow " WGCF 注册中…… "
-	until [[ -e wgcf-account.toml ]]
-	  do
-	   echo | wgcf register >/dev/null 2>&1
-	done
+	echo | wgcf register
+until [[ -e wgcf-account.toml ]]
+do
+sleep 1s
+echo | wgcf register
+done
+wgcf generate
 
-	# 生成 Wire-Guard 配置文件 (wgcf-profile.conf)
-	wgcf generate >/dev/null 2>&1
-
-	# 修改配置文件
-	echo $modify | sh
+echo $modify | sh
 
 	# 把 wgcf-profile.conf 复制到/etc/wireguard/ 并命名为 wgcf.conf
 	cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf
