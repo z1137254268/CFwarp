@@ -158,38 +158,9 @@ echo $modify | sh
 	# 把 wgcf-profile.conf 复制到/etc/wireguard/ 并命名为 wgcf.conf
 	cp -f wgcf-profile.conf /etc/wireguard/wgcf.conf
 
-	# 自动刷直至成功（ warp bug，有时候获取不了ip地址），记录新的 IPv4 和 IPv6 地址和归属地
-	green " 进度  3/3： 运行 WGCF "
-	yellow " 后台获取 WARP IP 中…… "
-
-	# 清空之前的相关变量值
-	unset v4 v6 v4country v6country warpv4 warpv6
-
-	wg-quick up wgcf >/dev/null 2>&1
-	v4=$(wget -T1 -t1 -qO- -4 ip.gs)
-	v6=$(wget -T1 -t1 -qO- -6 ip.gs)
-	until [[ -n $v4 && -n $v6 ]]
-	  do
-	   wg-quick down wgcf >/dev/null 2>&1
-	   wg-quick up wgcf >/dev/null 2>&1
-	   v4=$(wget -T1 -t1 -qO- -4 ip.gs)
-	   v6=$(wget -T1 -t1 -qO- -6 ip.gs)
-	done
-	v4country=$(wget -T1 -t1 -qO- -4 https://ip.gs/country)
-	[[ $(wget -T1 -t1 -qO- -4 https://www.cloudflare.com/cdn-cgi/trace | grep warp=on) ]] && warpv4=1
-	v6country=$(wget -T1 -t1 -qO- -6 https://ip.gs/country)
-	[[ $(wget -T1 -t1 -qO- -6 https://www.cloudflare.com/cdn-cgi/trace | grep warp=on) ]] && warpv6=1
 	
-	# 设置开机启动，由于warp bug，有时候获取不了ip地址，在定时任务加了重启后自动刷网络
 	systemctl enable wg-quick@wgcf >/dev/null 2>&1
-	grep -qE '^@reboot[ ]*root[ ]*bash[ ]*/etc/wireguard/WARP_AutoUp.sh' /etc/crontab || echo '@reboot root bash /etc/wireguard/WARP_AutoUp.sh' >> /etc/crontab
-	echo 'wg-quick up wgcf >/dev/null 2>&1' > /etc/wireguard/WARP_AutoUp.sh
-	echo 'until [[ -n $(wget -T1 -t1 -qO- -4 ip.gs) && -n $(wget -T1 -t1 -qO- -6 ip.gs) ]]' >> /etc/wireguard/WARP_AutoUp.sh
-	echo '	do' >> /etc/wireguard/WARP_AutoUp.sh
-	echo '		wg-quick down wgcf >/dev/null 2>&1' >> /etc/wireguard/WARP_AutoUp.sh
-	echo '		wg-quick up wgcf >/dev/null 2>&1' >> /etc/wireguard/WARP_AutoUp.sh
- 	echo '	done' >> /etc/wireguard/WARP_AutoUp.sh
-
+	
 	# 优先使用 IPv4 网络
 	[[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
