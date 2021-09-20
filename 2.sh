@@ -169,12 +169,14 @@ rm -f 1.sh
 exit 1
 fi
 
-	latest=$(wget --no-check-certificate -qO- -t1 -T2 "https://api.github.com/repos/ViRb3/wgcf/releases/latest" | grep "tag_name" | head -n 1 | cut -d : -f2 | sed 's/\"//g;s/v//g;s/,//g;s/ //g')
-	[[ -z $latest ]] && latest='2.2.8'
+if [[ ${bit} == "x86_64" ]]; then
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/1/wgcf-amd -O /usr/local/bin/wgcf
+chmod +x /usr/local/bin/wgcf
 
-	wget -N --no-check-certificate -O /usr/local/bin/wgcf https://github.com/ViRb3/wgcf/releases/download/v$latest/wgcf_${latest}_linux_$architecture
-
-	chmod +x /usr/local/bin/wgcf
+elif [[ ${bit} == "aarch64" ]]; then
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/1/wgcf-arm -O /usr/local/bin/wgcf
+chmod +x /usr/local/bin/wgcf
+fi
 
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/1/wireguard-go -O /usr/bin/wireguard-go
