@@ -131,8 +131,8 @@ install(){
 	# 添加执行权限
 	chmod +x /usr/local/bin/wgcf
 
-	# 如是 lXC，安装 wireguard-go
-	[[ $virtualization = 1 ]] && wget -N --no-check-certificate -P /usr/bin https://cdn.jsdelivr.net/gh/fscarmen/warp/wireguard-go && chmod +x /usr/bin/wireguard-go
+	wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/1/wireguard-go -O /usr/bin/wireguard-go
+        chmod +x /usr/bin/wireguard-go
 
 	# 注册 WARP 账户 (将生成 wgcf-account.toml 文件保存账户信息，为避免文件已存在导致出错，先尝试删掉原文件)
 	rm -f wgcf-account.toml
