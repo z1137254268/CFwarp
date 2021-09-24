@@ -213,10 +213,49 @@ systemctl enable wg-quick@wgcf >/dev/null 2>&1
 
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
-安装结束，当前IP及warp状态如下
-blue " WGCF 运行状态\t: ${WireGuardStatus}"
-blue " IPv4 网络状态\t: ${WARPIPv4Status}"
-blue " IPv6 网络状态\t: ${WARPIPv6Status}"
+warpwg=$(systemctl is-active wg-quick@wgcf)
+case ${warpwg} in
+inactive)
+     WireGuardStatus=$(green "运行中")
+     ;;
+*)
+     WireGuardStatus=$(red "未运行")
+esac
+
+v44=`wget -T1 -t1 -qO- -4 ip.gs`
+if [[ -n ${v44} ]]; then
+v4=`wget -qO- -4 ip.gs` 
+WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
+case ${WARPIPv4Status} in 
+on) 
+WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 ") 
+;; 
+off) 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ") 
+esac 
+else
+WARPIPv4Status=$(red "不存在IPV4地址 ")
+fi 
+
+v66=`wget -T1 -t1 -qO- -6 ip.gs`
+if [[ -n ${v66} ]]; then
+v6=`wget -qO- -6 ip.gs` 
+WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
+case ${WARPIPv6Status} in 
+on) 
+WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 ") 
+;; 
+off) 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ") 
+esac 
+else
+WARPIPv6Status=$(red "不存在IPV6地址 ")
+fi 
+
+green " 安装结束，当前IP及warp状态如下 "
+blue " WGCF 运行状态: ${WireGuardStatus}"
+blue " IPv4 网络状态: ${WARPIPv4Status}"
+blue " IPv6 网络状态: ${WARPIPv6Status}"
 
 yellow " 检测是否成功启动Warp！\n 显示IPV4地址：$(wget -T1 -t1 -qO- -4 ip.gs) 显示IPV6地址：$(wget -T1 -t1 -qO- -6 ip.gs) "
 green " 如上方显示IPV4地址：8.…………，IPV6地址：2a09:…………，则说明成功啦！\n 如上方IPV4无IP显示,IPV6显示本地IP,则说明失败喽！！ "
