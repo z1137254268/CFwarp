@@ -77,10 +77,10 @@ v4=`wget -qO- -4 ip.gs`
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
-WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 ") 
+WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4$gj4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4$gj4 ") 
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
@@ -92,10 +92,10 @@ v6=`wget -qO- -6 ip.gs`
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
-WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 ") 
+WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6$gj6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6$gj6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
@@ -211,10 +211,10 @@ v4=`wget -qO- -4 ip.gs`
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
-WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 ") 
+WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4$gj4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4$gj4 ") 
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
@@ -226,10 +226,10 @@ v6=`wget -qO- -6 ip.gs`
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
-WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 ") 
+WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6$gj6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6$gj6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
