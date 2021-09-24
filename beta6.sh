@@ -252,7 +252,7 @@ else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
-green " 安装结束，当前WARP及IP状态如下 "
+green "安装结束，当前WARP及IP状态如下 "
 blue " WGCF 运行状态: ${WireGuardStatus}"
 blue " IPv4 网络状态: ${WARPIPv4Status}"
 blue " IPv6 网络状态: ${WARPIPv6Status}"
