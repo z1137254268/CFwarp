@@ -405,31 +405,31 @@ function start_menu(){
            Netflix
 	;;    
         5 )
-           ABC1=${ud4} && ABC2${c3} && ABC3${c2} && ABC4${c5}; ins
+           ABC1=${ud4} && ABC2=${c3} && ABC3=${c2} && ABC4=${c5}; ins
 	;;
         6 )
-           ABC1=${c3} && ABC2${c1} && ABC3${c5}}; ins
+           ABC1=${c3} && ABC2=${c1} && ABC3=${c5}}; ins
 	;;
         7 )
            ABC1=${ud4} && ABC2=${c3} && ABC3=${c5}; ins
 	;;
         8 )
-           ABC1=${c4} && ABC2${c2} && ABC3${c5}; ins
+           ABC1=${c4} && ABC2=${c2} && ABC3=${c5}; ins
 	;;
         9 )
-           ABC1=${ud6} && ABC2${c1} &&ABC3${c4} ABC4{c6}; ins
+           ABC1=${ud6} && ABC2=${c1} &&ABC3=${c4} ABC4=${c6}; ins
 	;;
 	10 )   
 	   ABC1=${ud6} && ABC2=${c4} && ABC3=${c5}; ins
 	;;
 	11 )
-           ABC1=${ud4} && ABC2${c2} && ABC3${c5}; ins
+           ABC1=${ud4} && ABC2=${c2} && ABC3=${c5}; ins
 	;;
 	12 )
-           ABC1=${ud6} && ABC2${c1} && ABC3${c5}; ins
+           ABC1=${ud6} && ABC2=${c1} && ABC3=${c5}; ins
 	;;
 	13 )
-           ABC1=${ud4ud6} && ABC2${c5}; ins
+           ABC1=${ud4ud6} && ABC2=${c5}; ins
 	;;
 	14 )
            dns
