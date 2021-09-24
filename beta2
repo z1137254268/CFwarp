@@ -368,35 +368,35 @@ function start_menu(){
     echo
     read -p "请输入数字:" menuNumberInput
     case "$menuNumberInput" in     
-  1 )
+        1 )
            iptables
 	;;
-  2 )
+        2 )
            upcore
 	;;
-  3 )
+        3 )
            BBR
 	;;
 	4 )
            Netflix
 	;;    
-  5 )
+        5 )
            ABC1=${ud4} && ABC2${c3} && ABC3${c2} && ABC4${c5}; ins
 	;;
-  6 )
+        6 )
            ABC1=${c3} && ABC2${c1} && ABC3${c5}}; ins
 	;;
-  7 )
+        7 )
            ABC1=${ud4} && ABC2=${c3} && ABC3=${c5}; ins
 	;;
-  8 )
+        8 )
            ABC1=${c4} && ABC2${c2} && ABC3${c5}; ins
 	;;
-  9 )
+        9 )
            ABC1=${ud6} && ABC2${c1} &&ABC3${c4} ABC4{c6}; ins
 	;;
 	10 )   
-	         ABC1=${ud6} && ABC2=${c4} && ABC3=${c5}; ins
+	   ABC1=${ud6} && ABC2=${c4} && ABC3=${c5}; ins
 	;;
 	11 )
            ABC1=${ud4} && ABC2${c2} && ABC3${c5}; ins
@@ -431,9 +431,9 @@ function start_menu(){
 	21 )
            reboot
 	;;
-   0 )
+        0 )
            exit 1
-  ;;
+        ;;
   esac
 }
 
