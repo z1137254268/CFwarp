@@ -71,7 +71,7 @@ vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
 
 warpwg=$(systemctl is-active wg-quick@wgcf)
 case ${warpwg} in
-active)
+inactive)
      WireGuardStatus=$(green "运行中")
      ;;
 *)
