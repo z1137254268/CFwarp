@@ -68,6 +68,9 @@ rv4=`ip a | grep global | awk 'NR==1 {print $2}' | cut -d'/' -f1`
 rv6=`ip a | grep inet6 | awk 'NR==2 {print $2}' | cut -d'/' -f1`
 op=`hostnamectl | grep -i Operating | awk -F ':' '{print $2}'`
 vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
+gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
+gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
+
 
 warpwg=$(systemctl is-active wg-quick@wgcf)
 case ${warpwg} in
