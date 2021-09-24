@@ -71,16 +71,6 @@ vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
 gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
 gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
 
-
-warpwg=$(systemctl is-active wg-quick@wgcf)
-case ${warpwg} in
-inactive)
-     WireGuardStatus=$(green "运行中")
-     ;;
-*)
-     WireGuardStatus=$(red "未运行")
-esac
-
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
 v4=`wget -qO- -4 ip.gs` 
@@ -129,16 +119,17 @@ blue " 系统内核版本 - $version "
 blue " CPU架构名称  - $bit "
 blue " 虚拟架构类型 -$vi "
 white "------------------------------------------"
-blue " WGCF 运行状态\t: ${WireGuardStatus}"
-blue " IPv4 网络状态\t: ${WARPIPv4Status}"
-blue " IPv6 网络状态\t: ${WARPIPv6Status}"
+blue " IPv4 网络状态: ${WARPIPv4Status}"
+blue " IPv6 网络状态: ${WARPIPv6Status}"
 white "------------------------------------------"
 }
 
 function ins(){
-
-if [[ ${vi} == " lxc" ]]; then
+rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go  
+if [[ ${vi} == " lxc" ]]; then true
+if [ $release = "Centos" ]; then
 echo -e nameserver 2a0b:f4c0:4d:53::1 > /etc/resolv.conf
+fi
 fi
 if [ $release = "Centos" ]; then  
 yum -y install epel-release
@@ -216,15 +207,6 @@ systemctl enable wg-quick@wgcf >/dev/null 2>&1
 
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
-warpwg=$(systemctl is-active wg-quick@wgcf)
-case ${warpwg} in
-inactive)
-     WireGuardStatus=$(green "运行中")
-     ;;
-*)
-     WireGuardStatus=$(red "未运行")
-esac
-
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
 v4=`wget -qO- -4 ip.gs` 
@@ -256,7 +238,6 @@ WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
 green "安装结束，当前WARP及IP状态如下 "
-blue " WGCF 运行状态: ${WireGuardStatus}"
 blue " IPv4 网络状态: ${WARPIPv4Status}"
 blue " IPv6 网络状态: ${WARPIPv6Status}"
 
