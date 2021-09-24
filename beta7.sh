@@ -136,7 +136,7 @@ white "------------------------------------------"
 }
 
 function ins(){
-rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go  
+
 if [[ ${vi} == " lxc" ]]; then
 echo -e nameserver 2a0b:f4c0:4d:53::1 > /etc/resolv.conf
 fi
