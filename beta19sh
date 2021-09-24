@@ -77,10 +77,10 @@ v4=`wget -qO- -4 ip.gs`
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
-WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 IP所属国简称$gj4 ") 
+WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 IP所属国简称：$gj4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 IP所属国简称$gj4 ") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 IP所属国简称：$gj4 ") 
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
@@ -92,10 +92,10 @@ v6=`wget -qO- -6 ip.gs`
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
-WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 IP所属国简称$gj6 ") 
+WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 IP所属国简称：$gj6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 IP所属国简称$gj6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 IP所属国简称：$gj6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
@@ -119,8 +119,8 @@ blue " 系统内核版本 - $version "
 blue " CPU架构名称  - $bit "
 blue " 虚拟架构类型 -$vi "
 white "------------------------------------------"
-blue " WARP状态+IPv4网络状态: ${WARPIPv4Status}"
-blue " WARP状态+IPv6网络状态: ${WARPIPv6Status}"
+blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
 white "------------------------------------------"
 }
 
@@ -211,10 +211,10 @@ v4=`wget -qO- -4 ip.gs`
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
-WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 IP所属国简称$gj4 ") 
+WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 IP所属国简称：$gj4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 IP所属国简称$gj4 ") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 IP所属国简称：$gj4 ") 
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
@@ -226,18 +226,18 @@ v6=`wget -qO- -6 ip.gs`
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
-WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 IP所属国简称$gj6 ") 
+WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 IP所属国简称：$gj6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 IP所属国简称$gj6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 IP所属国简称：$gj6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
 green "安装结束，当前WARP及IP状态如下 "
-blue " IPv4 网络状态: ${WARPIPv4Status}"
-blue " IPv6 网络状态: ${WARPIPv6Status}"
+blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
 
 }
 
