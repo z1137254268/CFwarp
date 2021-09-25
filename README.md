@@ -93,7 +93,7 @@
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 ```
 
-进入脚本快捷方式 ```bash multi.sh```
+进入脚本快捷方式 ```bash CFwarp.sh```
 
 - [刷新脚本](https://purge.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.sh)
 
