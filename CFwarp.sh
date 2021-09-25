@@ -27,6 +27,7 @@ rred(){
 
 if [[ $(id -u) != 0 ]]; then
 yellow " 请以root模式运行脚本。"
+rm -f CFwarp.sh
 exit 0
 fi
 
@@ -77,10 +78,10 @@ v4=`wget -qO- -4 ip.gs`
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
-WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 ，IP所属国简称：$gj4 ") 
+WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP所属国简称：$gj4 ") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
@@ -92,10 +93,10 @@ v6=`wget -qO- -6 ip.gs`
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
-WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 ，IP所属国简称：$gj6 ") 
+WARPIPv6Status=$(green "WARP已开启,当前IPV6地址：$v6 ，IP区域简称：$gj6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ，IP所属国简称：$gj6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ，IP区域简称：$gj6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
@@ -119,8 +120,8 @@ blue " 系统内核版本 - $version "
 blue " CPU架构名称  - $bit "
 blue " 虚拟架构类型 -$vi "
 white "------------------------------------------"
-blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
-blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
+blue " WARP状态+IPv4地址+IP区域: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP区域: ${WARPIPv6Status}"
 white "------------------------------------------"
 }
 
@@ -160,18 +161,18 @@ apt update -y
 apt -y --no-install-recommends install net-tools iproute2 openresolv dnsutils wireguard-tools			
 else 
 red " 不支持你当前系统，请选择Ubuntu,Debain,Centos系统 "
-rm -f 1.sh
+rm -f CFwarp.sh
 exit 1
 fi
 	
 if [[ ${bit} == "x86_64" ]]; then
-wget -N https://cdn.jsdelivr.net/gh/kkkyg/1/wgcf-amd -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
+wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf-amd -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
 elif [[ ${bit} == "aarch64" ]]; then
-wget -N https://cdn.jsdelivr.net/gh/kkkyg/1/wgcf-arm -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
+wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf-arm -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
 fi
 
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
-wget -N https://cdn.jsdelivr.net/gh/kkkyg/1/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
+wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
          
 echo | wgcf register
@@ -205,16 +206,18 @@ systemctl enable wg-quick@wgcf >/dev/null 2>&1
 
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
+gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
+gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
 v4=`wget -qO- -4 ip.gs` 
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
-WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 ，IP所属国简称：$gj4 ") 
+WARPIPv4Status=$(green "WARP已开启,当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP所属国简称：$gj4 ") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
@@ -226,18 +229,18 @@ v6=`wget -qO- -6 ip.gs`
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
-WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v6 ，IP所属国简称：$gj6 ") 
+WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v6 ，IP区域简称：$gj6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ，IP所属国简称：$gj6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ，IP区域简称：$gj6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
 green "安装结束，当前WARP及IP状态如下 "
-blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
-blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
+blue " WARP状态+IPv4地址+IP区域: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP区域: ${WARPIPv6Status}"
 
 }
 
@@ -311,12 +314,12 @@ systemctl status wg-quick@wgcf
 }
 
 function up4(){
-wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
+wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 }
 
 function up6(){
 echo -e nameserver 2a0b:f4c0:4d:53::1 > /etc/resolv.conf
-wget -6 -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/multi.sh && chmod +x multi.sh && ./multi.sh
+wget -6 -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 }
 
 #主菜单
@@ -324,7 +327,7 @@ function start_menu(){
     clear
     yellow " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃" 
     
-    red " 切记：进入脚本快捷方式 bash multi.sh "
+    red " 切记：进入脚本快捷方式 bash CFwarp.sh "
     
     white " ==================一、VPS相关调整选择（更新中）==========================================" 
     
