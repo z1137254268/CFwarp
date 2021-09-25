@@ -1,6 +1,7 @@
-## 21.9.16 近期脚本将重构。。
 
-## BETA测试16，更新内容 " 自动选择适合你小鸡的WARP模式：内核版本大于5.6》安装内核集成模式。小于5.6》安装内核模块模式。lxc与OpenVZ架构》安装wireguard-go模式"
+### 更新内容 " 自动选择适合你小鸡的WARP模式：内核版本大于5.6》安装内核集成模式。小于5.6》安装内核模块模式。lxc与OpenVZ架构》安装wireguard-go模式"
+ 
+### 以下说明文档更新中。。。
 
 ## 支持kvm/xen/microsoft等架构VPS的WARP一键综合脚本
 
@@ -8,7 +9,7 @@
 - [x] 支持纯IPV4，纯IPV6，双栈IPV4+IPV6 三大类kvm VPS！
 - [x] 支持Ubuntu/Centos/Debain最新系统！
 - [x] 支持共9种形态的WARP形式，安装过程无需手动干预！
-- [x] 支持即时显示当前WARP状态与IP地址！
+- [x] 支持即时显示当前WARP状态、IP地址、IP区域！
 
 ### 相关视频教程及项目
 
@@ -22,15 +23,7 @@
  
 ### 提醒：
 
-1、有些KVM VPS仅提供较低的系统内核版本，如不能升级内核版本，建议DD到最新系统，推荐ubuntu20、centos7、debain10以上。
-
-2、不建议使用Docker，因为目前与WARP模式不兼容。
-
-3、内核必须5.6以上，脚本自带稳定版内核升级功能。
-
-4、OpenVZ、LXC架构的VPS并不集成在此脚本中。
-
-#### OpenVZ、LXC架构纯V6脚本:[EUserv 纯ipv6(OpenVZ、LXC架构VPS)WARP项目](https://github.com/ygkkk/EUservWARP)。
+不建议使用Docker，因为目前与WARP模式不兼容。
 
 --------------------------------------------------------------------------------------------
 
@@ -97,12 +90,12 @@
 - **：支持X86/ARM架构的纯IPV4、纯IPV6、双栈IPV4+IPV6 VPS脚本**
 
 ```
-wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/multi.sh && chmod +x multi.sh && ./multi.sh
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 ```
 
 进入脚本快捷方式 ```bash multi.sh```
 
-- [刷新脚本](https://purge.jsdelivr.net/gh/kkkyg/CFwarp/multi.sh)
+- [刷新脚本](https://purge.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.sh)
 
 ---------------------------------------------------------------------------------------------------
 
