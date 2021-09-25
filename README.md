@@ -15,6 +15,13 @@
 
 待更新 
 
+DIG9用户请先执行
+
+```
+echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
+```
+
+
 ---------------------------------------------------------------------------------------------
 
 ### 更新已测试通过的VPS名单
