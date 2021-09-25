@@ -3,7 +3,7 @@
  
 ### 以下说明文档更新中。。。
 
-## 支持kvm/xen/microsoft等架构VPS的WARP一键综合脚本
+## 支持KVM、lxc等架构VPS的WARP一键综合脚本
 
 - [x] 支持自动识别系统类型，CPU架构(X86/ARM)，内核版本，虚拟化架构类型！
 - [x] 支持纯IPV4，纯IPV6，双栈IPV4+IPV6 三大类kvm VPS！
