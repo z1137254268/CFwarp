@@ -1,3 +1,4 @@
+### 公测！！
 
 ### 更新内容 " 自动选择适合你小鸡的WARP模式：内核版本大于5.6》安装内核集成模式。小于5.6》安装内核模块模式。lxc与OpenVZ架构》安装wireguard-go模式"
  
@@ -15,7 +16,7 @@
 
 待更新 
 
-DIG9用户请先执行
+EUserv德鸡DIG9用户请先执行
 
 ```
 echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
