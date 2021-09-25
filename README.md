@@ -12,6 +12,14 @@
 - [x] 支持共9种形态的WARP形式，安装过程无需手动干预！
 - [x] 支持即时显示当前WARP状态、IP地址、IP区域！
 
+最新一键脚本：
+```
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
+```
+
+进入脚本快捷方式 ```bash CFwarp.sh```
+
+
 ### 相关视频教程及项目
 
 待更新 
