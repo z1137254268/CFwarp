@@ -270,6 +270,8 @@ wg-quick up wgcf
 
 开始systemctl start wg-quick@wgcf
 
+状态systemctl status wg-quick@wgcf
+
 重启systemctl restart wg-quick@wgcf
 
 停止systemctl stop wg-quick@wgcf
