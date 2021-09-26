@@ -29,13 +29,8 @@ EUserv德鸡DIG9用户请先执行
 ```
 echo -e "search blue.kundencontroller.de\noptions rotate\nnameserver 2a02:180:6:5::1c\nnameserver 2a02:180:6:5::4\nnameserver 2a02:180:6:5::1e\nnameserver 2a02:180:6:5::1d" > /etc/resolv.conf
 ```
-
-
 ---------------------------------------------------------------------------------------------
 
-### 更新已测试通过的VPS名单
-
- - [x] 已支持：oracle（甲骨文云），gpc（谷歌云），buyvm，racknerd，aws（亚马逊云），virmach，vultr，azure（微软云），bandwagonhost（搬瓦工）………………欢迎大家补充反馈………
  
 ### 提醒：
 
@@ -168,13 +163,11 @@ wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/CFwarp.s
 
 脚本13、结果表现为2个IP：VPS本地IPV6+WARP虚拟IPV4
 
-- **六、统一DNS功能（推荐有IPV4访问能力的VPS使用，建议出现vps失联后启用！）：**
+- **六、定时重启VPS功能，：**
 
 VPS可能会强制初始化DNS设置，使WARP设置的DNS失效，导致进入SSH后无法访问外网（如无此问题则无需选择执行）
 
-虽然说重启VPS能恢复WARP的DNS并能正常访问外网，但很不方便。
-
-本功能会强制固定VPS的DNS为WARP设置的DNS，这样就不会出现SHH无法访问外网的问题。
+重启VPS能恢复WARP的DNS并能正常访问外网，现设置为每天早上3点自动重启VPS一次，保证WARP功能正常
 
 - **七、永久关闭WARP功能：**
 
