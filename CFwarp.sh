@@ -267,7 +267,7 @@ lsmod | grep bbr
 function cwarp(){
 systemctl stop wg-quick@wgcf
 systemctl disable wg-quick@wgcf
-sudo reboot
+reboot
 }
 
 function owarp(){
@@ -298,6 +298,28 @@ wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.60_
 
 function reboot(){
 sudo reboot
+}
+
+function dsreboot(){
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+if [ $release = "Centos" ]; then  
+yum install vixie-cron crontabs
+chkconfig crond on
+service crond start
+sed -i '/reboot/d' /var/spool/cron/root >/dev/null 2>&1
+echo "0 3 * * * /sbin/reboot >/dev/null 2>&1" >> /var/spool/cron/root
+chmod 777 /var/spool/cron/root
+crontab /var/spool/cron/root
+service crond restart
+fi
+if [ $release = "Debian" || $release = "Ubuntu" ]; then
+apt install cron
+sed -i '/reboot/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
+echo "0 3 * * * /sbin/reboot >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+chmod 777 /var/spool/cron/crontabs/root
+crontab /var/spool/cron/crontabs/root
+service cron restart
+fi
 }
 
 function dns(){
@@ -363,7 +385,7 @@ function start_menu(){
     
     white " ------------------------------------------------------------------------------------------------"
     
-    green " 14. 统一DNS功能 "
+    green " 14. 默认每天3点重启VPS一次 "
     
     green " 15. 永久关闭WARP功能 "
     
@@ -430,7 +452,7 @@ function start_menu(){
            ABC1=${ud4ud6} && ABC2=${c5}; ins
 	;;
 	14 )
-           dns
+           dsreboot
 	;;
 	15 )
            cwarp
