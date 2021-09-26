@@ -69,12 +69,11 @@ rv4=`ip a | grep global | awk 'NR==1 {print $2}' | cut -d'/' -f1`
 rv6=`ip a | grep inet6 | awk 'NR==2 {print $2}' | cut -d'/' -f1`
 op=`hostnamectl | grep -i Operating | awk -F ':' '{print $2}'`
 vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
-gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
-gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
 v4=`wget -qO- -4 ip.gs` 
+gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
@@ -90,6 +89,7 @@ fi
 v66=`wget -T1 -t1 -qO- -6 ip.gs`
 if [[ -n ${v66} ]]; then
 v6=`wget -qO- -6 ip.gs` 
+gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
@@ -203,14 +203,13 @@ v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 done
 
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
-
+systemctl start wg-quick@wgcf >/dev/null 2>&1
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
-gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
-gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
 v4=`wget -qO- -4 ip.gs` 
+gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
@@ -226,6 +225,7 @@ fi
 v66=`wget -T1 -t1 -qO- -6 ip.gs`
 if [[ -n ${v66} ]]; then
 v6=`wget -qO- -6 ip.gs` 
+gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
