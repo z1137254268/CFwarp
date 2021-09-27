@@ -75,15 +75,14 @@ v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
 v4=`wget -qO- -4 ip.gs` 
 gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
+a="eval echo \$$gj4"
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
 WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启 ") 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ") 
-yellow "IP国家："eval echo \$$gj4 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP区域简称：$a") 
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
