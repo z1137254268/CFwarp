@@ -14,11 +14,17 @@ blue(){
     echo -e "\033[36m\033[01m$1\033[0m"
 }
 
+vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
 main=`uname  -r | awk -F . '{print $1 }'`
 minor=`uname -r | awk -F . '{print $2}'`
 
 if [ "$main" -ge 5 ]|| [ "$minor" -ge 6 ]; then 
 red "你的VPS内核版本大于5.6,无须升级！"
+exit 0
+fi
+
+if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
+red "你的VPS为lxc或openvz架构，无法升级内核！"
 exit 0
 fi
 
@@ -53,7 +59,7 @@ reboot
 }
 
 function v6(){
-echo -e nameserver 2a00:1098:2c::1 > /etc/resolv.conf
+echo -e nameserver 2a0b:f4c0:4d:53::1 > /etc/resolv.conf
 cd /tmp
 wget --no-check-certificate -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.11/amd64/linux-headers-5.11.0-051100_5.11.0-051100.202102142330_all.deb
 wget --no-check-certificate -c https://kernel.ubuntu.com/~kernel-ppa/mainline/v5.11/amd64/linux-headers-5.11.0-051100-generic_5.11.0-051100.202102142330_amd64.deb 
