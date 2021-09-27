@@ -69,34 +69,35 @@ rv4=`ip a | grep global | awk 'NR==1 {print $2}' | cut -d'/' -f1`
 rv6=`ip a | grep inet6 | awk 'NR==2 {print $2}' | cut -d'/' -f1`
 op=`hostnamectl | grep -i Operating | awk -F ':' '{print $2}'`
 vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
+AE="阿联酋";AU="澳大利亚";BE="比利时";BR="巴西";CA="加拿大";CH="瑞士";CL="智利";CN="中国";DE="德国";ES="西班牙";FI="芬兰";FR="法国";HK="香港";ID="印尼";IE="爱尔兰";IN="印度";IT="意大利";JP="日本";KR="韩国";MY="马来西亚";NL="荷兰";NZ="新西兰";PH="菲律宾";RU="俄罗斯";SA="沙特";SE="瑞典";SG="新加坡";TW="台湾";UK="英国";US="美国";VN="越南";ZA="南非"
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
-v4=`wget -qO- -4 ip.gs` 
 gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
+g4=$(eval echo \$$gj4)
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
-WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
+WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在国家：$g4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在国家：$g4")
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
 fi 
 
 v66=`wget -T1 -t1 -qO- -6 ip.gs`
-if [[ -n ${v66} ]]; then
-v6=`wget -qO- -6 ip.gs` 
+if [[ -n ${v66} ]]; then 
 gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
+g6=$(eval echo \$$gj6)
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
-WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v6 ，IP区域简称：$gj6 ") 
+WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在国家：$g6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ，IP区域简称：$gj6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在国家：$g6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
@@ -120,8 +121,8 @@ blue " 系统内核版本 - $version "
 blue " CPU架构名称  - $bit "
 blue " 虚拟架构类型 -$vi "
 white "------------------------------------------"
-blue " WARP状态+IPv4地址+IP区域: ${WARPIPv4Status}"
-blue " WARP状态+IPv6地址+IP区域: ${WARPIPv6Status}"
+blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
 white "------------------------------------------"
 }
 
@@ -203,44 +204,43 @@ v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 done
 
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
-systemctl start wg-quick@wgcf >/dev/null 2>&1
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
-v4=`wget -qO- -4 ip.gs` 
 gj4=`wget -T1 -t1 -qO- -4 https://ip.gs/country-iso`
+g4=$(eval echo \$$gj4)
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
 on) 
-WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
+WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在国家：$g4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在国家：$g4")
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
 fi 
 
 v66=`wget -T1 -t1 -qO- -6 ip.gs`
-if [[ -n ${v66} ]]; then
-v6=`wget -qO- -6 ip.gs` 
+if [[ -n ${v66} ]]; then 
 gj6=`wget -T1 -t1 -qO- -6 https://ip.gs/country-iso`
+g6=$(eval echo \$$gj6)
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
 on) 
-WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v6 ，IP区域简称：$gj6 ") 
+WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在国家：$g6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v6 ，IP区域简称：$gj6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在国家：$g6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
 green "安装结束，当前WARP及IP状态如下 "
-blue " WARP状态+IPv4地址+IP区域: ${WARPIPv4Status}"
-blue " WARP状态+IPv6地址+IP区域: ${WARPIPv6Status}"
+blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
 
 }
 
