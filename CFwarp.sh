@@ -245,7 +245,7 @@ blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
 }
 
 function upcore(){
-wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/upcore.sh && chmod +x upcore.sh && ./upcore.sh
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/ucore.sh && chmod +x ucore.sh && ./ucore.sh
 }
 
 function iptables(){
