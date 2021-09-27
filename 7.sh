@@ -82,7 +82,7 @@ on)
 WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v4 ，IP区域简称：$gj4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP区域简称：$a") 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v4 ，IP区域简称：${a}") 
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
