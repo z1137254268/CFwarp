@@ -14,6 +14,14 @@ blue(){
     echo -e "\033[36m\033[01m$1\033[0m"
 }
 
+main=`uname  -r | awk -F . '{print $1 }'`
+minor=`uname -r | awk -F . '{print $2}'`
+
+if [ "$main" -ge 5 ]|| [ "$minor" -ge 6 ]; then 
+red "你的VPS内核版本大于5.6,无须升级！"
+exit 0
+fi
+
 function c8(){
 rpm --import https://www.elrepo.org/RPM-GPG-KEY-elrepo.org
 yum install https://www.elrepo.org/elrepo-release-8.el8.elrepo.noarch.rpm -y
