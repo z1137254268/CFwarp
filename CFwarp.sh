@@ -129,7 +129,7 @@ white "------------------------------------------"
 function ins(){
 rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go  
 
-if [[${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
+if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 case $(tun) in 
 tun)
