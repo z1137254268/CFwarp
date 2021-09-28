@@ -130,7 +130,7 @@ function ins(){
 rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go  
 if [[ ${vi} == " lxc" ]]; then true
 if [ $release = "Centos" ]; then
-echo -e nameserver 2a0b:f4c0:4d:53::1 > /etc/resolv.conf
+echo -e nameserver 2001:67c:2960:6464:6464:6464:6464:6464 > /etc/resolv.conf
 fi
 fi
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
