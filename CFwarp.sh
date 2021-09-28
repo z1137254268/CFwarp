@@ -135,12 +135,13 @@ fi
 fi
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
-case $(tun) in 
+if $(tun) in 
 tun)
 esac
 else
 red "你的lxc或者openvz小鸡未开启TUN，无法安装warp"
 exit 0
+fi
 fi
 if [ $release = "Centos" ]; then  
 yum -y install epel-release
