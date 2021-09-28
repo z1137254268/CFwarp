@@ -131,7 +131,7 @@ rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.t
 
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
-case $(tun) in 
+case ${tun} in 
 tun)
 tun=$(green "已开启TUN")
 esac
