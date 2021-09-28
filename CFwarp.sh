@@ -204,6 +204,7 @@ v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 done
 
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
+systemctl start wg-quick@wgcf >/dev/null 2>&1
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
