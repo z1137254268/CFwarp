@@ -315,7 +315,7 @@ ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 if [ ${release} = "Centos" ]; then  
 yum install vixie-cron crontabs
 chkconfig crond on
-service crond start
+systemctl start crond.service
 sed -i '/reboot/d' /var/spool/cron/root >/dev/null 2>&1
 echo "0 3 * * * /sbin/reboot >/dev/null 2>&1" >> /var/spool/cron/root
 chmod 777 /var/spool/cron/root
@@ -350,8 +350,8 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/ma
 }
 
 function up6(){
-echo -e nameserver 2a0b:f4c0:4d:53::1 > /etc/resolv.conf
-wget -6 -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
+echo -e nameserver 2001:67c:2960:6464:6464:6464:6464:6464 > /etc/resolv.conf
+wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 }
 
 #主菜单
