@@ -320,15 +320,15 @@ sed -i '/reboot/d' /var/spool/cron/root >/dev/null 2>&1
 echo "0 3 * * * /sbin/reboot >/dev/null 2>&1" >> /var/spool/cron/root
 chmod 777 /var/spool/cron/root
 crontab /var/spool/cron/root
-service crond restart
+systemctl restart crond.service
 fi
-if [ ${release} = "Debian" || ${release} = "Ubuntu" ]; then
+if [[ ${release} = "Debian" || ${release} = "Ubuntu" ]]; then
 apt install cron
 sed -i '/reboot/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
 echo "0 3 * * * /sbin/reboot >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 chmod 777 /var/spool/cron/crontabs/root
 crontab /var/spool/cron/crontabs/root
-service cron restart
+systemctl restart cron.service
 fi
 }
 
