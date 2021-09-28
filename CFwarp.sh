@@ -312,7 +312,7 @@ sudo reboot
 
 function dsreboot(){
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-if [ $release = "Centos" ]; then  
+if [ ${release} = "Centos" ]; then  
 yum install vixie-cron crontabs
 chkconfig crond on
 service crond start
@@ -322,7 +322,7 @@ chmod 777 /var/spool/cron/root
 crontab /var/spool/cron/root
 service crond restart
 fi
-if [ $release = "Debian" || $release = "Ubuntu" ]; then
+if [ ${release} = "Debian" || ${release} = "Ubuntu" ]; then
 apt install cron
 sed -i '/reboot/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
 echo "0 3 * * * /sbin/reboot >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
