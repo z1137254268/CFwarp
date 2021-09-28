@@ -128,11 +128,24 @@ white "------------------------------------------"
 
 function ins(){
 rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go  
+
+if [[${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
+tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
+case $(tun) in 
+tun)
+tun=$(green "已开启TUN")
+esac
+else
+tun=$(red "你的lxc或者openvz小鸡未开启TUN，无法安装warp")
+exit 0
+fi
+
 if [[ ${vi} == " lxc" ]]; then true
 if [ $release = "Centos" ]; then
 echo -e nameserver 2001:67c:2960:6464:6464:6464:6464:6464 > /etc/resolv.conf
 fi
 fi
+
 if [ $release = "Centos" ]; then  
 yum -y install epel-release
 yum -y install curl net-tools wireguard-tools	
