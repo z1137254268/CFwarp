@@ -135,7 +135,7 @@ fi
 fi
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
-case $(tun)in 
+case $(tun) in 
 tun)
 esac
 else
