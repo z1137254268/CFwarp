@@ -279,9 +279,10 @@ echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
 lsmod | grep bbr
+green "安装原生BBR加速成功"
 else 
-red " 不支持你当前架构，请选择KVM等主流架构 "
-sleep 2s
+red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
+sleep 3s
 start_menu
 fi
 }
