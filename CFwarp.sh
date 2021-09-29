@@ -16,11 +16,9 @@ blue(){
 white(){
     echo -e "\033[1;37m\033[01m$1\033[0m"
 }
-
 bblue(){
     echo -e "\033[1;34m\033[01m$1\033[0m"
 }
-
 rred(){
     echo -e "\033[1;35m\033[01m$1\033[0m"
 }
@@ -186,7 +184,6 @@ wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf-amd -O /usr/local/bin/wgcf
 elif [[ ${bit} == "aarch64" ]]; then
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf-arm -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
 fi
-
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
@@ -257,7 +254,6 @@ fi
 green "安装结束，当前WARP及IP状态如下 "
 blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
 blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
-
 }
 
 function upcore(){
