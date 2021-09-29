@@ -280,6 +280,7 @@ echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
 lsmod | grep bbr
 else 
+sleep 2s
 red " 不支持你当前架构，请选择KVM等主流架构 "
 start_menu
 fi
