@@ -313,7 +313,7 @@ wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.60_
 }
 
 function reboot(){
-sudo reboot
+reboot
 }
 
 function dsreboot(){
