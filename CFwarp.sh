@@ -274,10 +274,15 @@ sudo reboot
 }
 
 function BBR(){
+if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
 lsmod | grep bbr
+else 
+red " 不支持你当前架构，请选择KVM等主流架构 "
+start_menu
+fi
 }
 
 function cwarp(){
