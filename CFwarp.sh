@@ -317,7 +317,6 @@ wg-quick down wgcf
 
 function owarp(){
 wg-quick up wgcf
-systemctl enable wg-quick@wgcf
 }
 
 function macka(){
@@ -436,17 +435,17 @@ function start_menu(){
     
     green " 16. 临时关闭WARP功能 "
     
-    green " 17. 临时开启WARP功能 "
+    green " 17. 恢复开启WARP功能 "
     
     white " ==================三、代理协议脚本选择（更新中）==========================================="
     
-    green " 19.使用mack-a脚本（支持Xray, V2ray） "
+    green " 18.使用mack-a脚本（支持Xray, V2ray） "
     
-    green " 20.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
+    green " 19.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
     
     white " ============================================================================================="
     
-    green " 21. 重启VPS实例，请重新连接SSH "
+    green " 20. 重启VPS实例，请重新连接SSH "
     
     white " ===============================================================================================" 
     
