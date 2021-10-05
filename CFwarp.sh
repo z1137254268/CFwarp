@@ -132,10 +132,10 @@ tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 if [[ -n ${tun} ]]; then
 case ${tun} in 
 tun)
-green "已开启TUN"
+green "经检测，已开启TUN，安装wireguard-go模式的WARP(+)"
 esac
 else
-red "你的lxc或者openvz小鸡未开启TUN，无法安装warp"
+red "你的lxc或者openvz小鸡未开启TUN，无法启动warp(+)，自动退出"
 exit 0
 fi
 fi
@@ -216,7 +216,7 @@ v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 done
 
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
-systemctl start wg-quick@wgcf >/dev/null 2>&1
+systemctl restart wg-quick@wgcf
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
