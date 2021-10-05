@@ -67,7 +67,7 @@ rv4=`ip a | grep global | awk 'NR==1 {print $2}' | cut -d'/' -f1`
 rv6=`ip a | grep inet6 | awk 'NR==2 {print $2}' | cut -d'/' -f1`
 op=`hostnamectl | grep -i Operating | awk -F ':' '{print $2}'`
 vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
-AE="阿联酋";AU="澳大利亚";BE="比利时";BR="巴西";CA="加拿大";CH="瑞士";CL="智利";CN="中国";DE="德国";ES="西班牙";FI="芬兰";FR="法国";HK="香港";ID="印尼";IE="爱尔兰";IN="印度";IT="意大利";JP="日本";KR="韩国";MY="马来西亚";NL="荷兰";NZ="新西兰";PH="菲律宾";RU="俄罗斯";SA="沙特";SE="瑞典";SG="新加坡";TW="台湾";UK="英国";US="美国";VN="越南";ZA="南非"
+AE="阿联酋";AU="澳大利亚";BR="巴西";CA="加拿大";CH="瑞士";CL="智利";CN="中国";DE="德国";ES="西班牙";FI="芬兰";FR="法国";HK="香港";ID="印尼";IE="爱尔兰";IN="印度";IT="意大利";JP="日本";KR="韩国";MY="马来西亚";NL="荷兰";NZ="新西兰";PH="菲律宾";RU="俄罗斯";SA="沙特";SE="瑞典";SG="新加坡";TW="台湾";UK="英国";US="美国";VN="越南";ZA="南非"
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
@@ -75,11 +75,14 @@ gj4=`curl -s4 https://ip.gs/country-iso`
 g4=$(eval echo \$$gj4)
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
+plus) 
+WARPIPv4Status=$(green "WARP+PLUS已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
+;;  
 on) 
-WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在国家：$g4 ") 
+WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在国家：$g4")
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在区域：$g4")
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
@@ -91,11 +94,14 @@ gj6=`curl -s6 https://ip.gs/country-iso`
 g6=$(eval echo \$$gj6)
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
+plus) 
+WARPIPv6Status=$(green "WARP+PLUS已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
+;; 
 on) 
-WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在国家：$g6 ") 
+WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在国家：$g6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
@@ -119,8 +125,8 @@ blue " 系统内核版本 - $version "
 blue " CPU架构名称  - $bit "
 blue " 虚拟架构类型 -$vi "
 white "------------------------------------------"
-blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
-blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
+blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 white "------------------------------------------"
 }
 
@@ -194,6 +200,13 @@ do
 sleep 1s
 echo | wgcf register
 done
+
+read -p "继续使用原WARP账户请“回车”跳过，如想启用WARP+账户，请复制WARP+的按键ID码(26个字符):" ID
+if [[ -n $ID ]]; then
+green "启用WARP+账户……如出现400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
+sed -i "s/license_key.*/license_key = \"$ID\"/g" wgcf-account.toml
+wgcf update
+fi
 wgcf generate
 
 echo $ABC1 | sh
@@ -216,7 +229,6 @@ v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 done
 
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
-systemctl restart wg-quick@wgcf
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
@@ -225,11 +237,14 @@ gj4=`curl -s4 https://ip.gs/country-iso`
 g4=$(eval echo \$$gj4)
 WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv4Status} in 
+plus) 
+WARPIPv4Status=$(green "WARP+PLUS已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
+;;  
 on) 
-WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在国家：$g4 ") 
+WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
 ;; 
 off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在国家：$g4")
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在区域：$g4")
 esac 
 else
 WARPIPv4Status=$(red "不存在IPV4地址 ")
@@ -241,19 +256,25 @@ gj4=`curl -s6 https://ip.gs/country-iso`
 g6=$(eval echo \$$gj6)
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
+plus) 
+WARPIPv4Status=$(green "WARP+PLUS已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
+;;  
 on) 
-WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在国家：$g6 ") 
+WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
 ;; 
 off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在国家：$g6 ") 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
 esac 
 else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
 green "安装结束，当前WARP及IP状态如下 "
-blue " WARP状态+IPv4地址+IP国家: ${WARPIPv4Status}"
-blue " WARP状态+IPv6地址+IP国家: ${WARPIPv6Status}"
+blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+yellow "为保证WARP服务正常运行，默认重启当前VPS，请执行快捷启动方式：bash CFwarp.sh "
+sleep 3s
+reboot
 }
 
 function upcore(){
