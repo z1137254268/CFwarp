@@ -298,20 +298,26 @@ lsmod | grep bbr
 green "安装原生BBR加速成功"
 else 
 red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
-sleep 3s
+sleep 2s
 start_menu
 fi
 }
 
 function cwarp(){
-systemctl stop wg-quick@wgcf
-systemctl disable wg-quick@wgcf
+wg-quick down wgcf
+yum -y autoremove wireguard-tools wireguard-dkms 2>/dev/null && apt -y autoremove wireguard-tools wireguard-dkms 2>/dev/null
+rm -rf /usr/local/bin/wgcf /etc/wireguard /usr/bin/wireguard-go /etc/wireguard wgcf-account.toml wgcf-profile.conf
+[[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 reboot
 }
 
+function c1warp(){
+wg-quick down wgcf
+}
+
 function owarp(){
+wg-quick up wgcf
 systemctl enable wg-quick@wgcf
-systemctl start wg-quick@wgcf
 }
 
 function macka(){
@@ -426,13 +432,11 @@ function start_menu(){
     
     green " 14. 默认每天3点重启VPS一次 "
     
-    green " 15. 永久关闭WARP功能 "
+    green " 15. 卸载WARP功能 "
     
-    green " 16. 自动开启WARP功能 "
+    green " 16. 临时关闭WARP功能 "
     
-    green " 17. 有IPV4：更新脚本 "
-    
-    green " 18. 无IPV4：更新脚本 "
+    green " 17. 临时开启WARP功能 "
     
     white " ==================三、代理协议脚本选择（更新中）==========================================="
     
@@ -497,21 +501,18 @@ function start_menu(){
            cwarp
 	;;
 	16 )
-           owarp
+           c1warp
 	;;
 	17 )
-           up4
+           owarp
 	;;
 	18 )
-           up6
-	;;
-	19 )
            macka
 	;;
-	20 )
+	19 )
            phlinhng
 	;;
-	21 )
+	20 )
            reboot
 	;;
         0 )
