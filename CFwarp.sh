@@ -229,6 +229,8 @@ v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 done
 
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
+wg-quick down wgcf
+systemctl restart wg-quick@wgcf
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
@@ -272,9 +274,6 @@ fi
 green "安装结束，当前WARP及IP状态如下 "
 blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
-yellow "为保证WARP服务正常运行，默认重启当前VPS，请执行快捷启动方式：bash CFwarp.sh "
-sleep 3s
-reboot
 }
 
 function upcore(){
