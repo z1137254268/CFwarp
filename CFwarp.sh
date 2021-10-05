@@ -131,7 +131,9 @@ white "------------------------------------------"
 }
 
 function ins(){
-rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
+wg-quick down wgcf >/dev/null 2>&1
+rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
+
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 if [[ -n ${tun} ]]; then
@@ -200,9 +202,9 @@ sleep 1s
 echo | wgcf register
 done
 
-read -p "继续使用原WARP账户请“回车”跳过，如想启用WARP+账户，请复制WARP+的按键ID码(26个字符):" ID
+read -p "继续使用原WARP账户请“回车”跳过，如想启用WARP+PLUS账户，请复制WARP+的按键ID码(26个字符):" ID
 if [[ -n $ID ]]; then
-green "启用WARP+账户……如出现400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
+green "启用WARP+PLUS账户中……如提示400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
 sed -i "s/license_key.*/license_key = \"$ID\"/g" wgcf-account.toml
 wgcf update
 fi
@@ -304,7 +306,7 @@ fi
 
 function cwarp(){
 yum -y autoremove wireguard-tools wireguard-dkms && apt -y autoremove wireguard-tools wireguard-dkms >/dev/null 2>&1
-rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
+rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 reboot
 }
