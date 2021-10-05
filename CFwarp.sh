@@ -253,7 +253,7 @@ fi
 
 v66=`wget -T1 -t1 -qO- -6 ip.gs`
 if [[ -n ${v66} ]]; then 
-gj4=`curl -s6 https://ip.gs/country-iso`
+gj6=`curl -s6 https://ip.gs/country-iso`
 g6=$(eval echo \$$gj6)
 WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
 case ${WARPIPv6Status} in 
