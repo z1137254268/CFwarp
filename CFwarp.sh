@@ -228,7 +228,7 @@ v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 done
 
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
-wg-quick down wgcf
+wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
@@ -303,7 +303,7 @@ fi
 }
 
 function cwarp(){
-yum -y autoremove wireguard-tools wireguard-dkms 2>/dev/null && apt -y autoremove wireguard-tools wireguard-dkms 2>/dev/null
+yum -y autoremove wireguard-tools wireguard-dkms && apt -y autoremove wireguard-tools wireguard-dkms >/dev/null 2>&1
 rm -f /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 reboot
