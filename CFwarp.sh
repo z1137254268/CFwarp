@@ -268,7 +268,11 @@ blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function warpplus(){
-apt -y install python3 >/dev/null 2>&1 && yum -y install python3 >/dev/null 2>&1
+if [ $release = "Centos" ]; then
+yum -y install python3
+else 
+apt -y install python3
+fi
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/warp-plus/wp.py
 python3 wp.py
 }
