@@ -267,7 +267,7 @@ blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function warpplus(){
-apt -y install python3 && yum -y install python3 >/dev/null 2>&1
+apt -y install python3 >/dev/null 2>&1 && yum -y install python3 >/dev/null 2>&1
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/warp-plus/wp.py
 python3 wp.py
 }
@@ -300,7 +300,7 @@ fi
 }
 
 function cwarp(){
-yum -y autoremove wireguard-tools wireguard-dkms && apt -y autoremove wireguard-tools wireguard-dkms >/dev/null 2>&1
+yum -y autoremove wireguard-tools wireguard-dkms >/dev/null 2>&1 && apt -y autoremove wireguard-tools wireguard-dkms >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 reboot
