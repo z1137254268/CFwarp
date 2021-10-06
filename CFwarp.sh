@@ -202,11 +202,11 @@ sleep 1s
 echo | wgcf register
 done
 
-read -p "继续使用原WARP账户请“回车”跳过，如想启用WARP+PLUS账户，请复制WARP+的按键ID码(26个字符):" ID
+read -p "继续使用原WARP账户请“回车”跳过；启用WARP+PLUS账户，请复制WARP+的按键许可证秘钥(26个字符):" ID
 if [[ -n $ID ]]; then
-green "启用WARP+PLUS账户中……如提示400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
 sed -i "s/license_key.*/license_key = \"$ID\"/g" wgcf-account.toml
 wgcf update
+green "启用WARP+PLUS账户中……如提示400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
 fi
 wgcf generate
 
