@@ -241,7 +241,6 @@ chmod 777 /var/spool/cron/crontabs/root
 crontab /var/spool/cron/crontabs/root
 systemctl restart cron.service
 fi
-}
 
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
