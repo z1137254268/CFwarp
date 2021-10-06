@@ -302,7 +302,11 @@ fi
 
 function cwarp(){
 wg-quick down wgcf >/dev/null 2>&1
-yum -y autoremove wireguard-tools wireguard-dkms 2>/dev/null && apt -y autoremove wireguard-tools wireguard-dkms 2>/dev/null
+if [ $release = "Centos" ]; then
+yum -y autoremove wireguard-tools wireguard-dkms
+else 
+apt -y autoremove wireguard-tools wireguard-dkms
+fi
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 }
