@@ -194,7 +194,8 @@ fi
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
-         
+
+yellow "执行过程可能会多次提示429 Too Many Requests，请耐心等待。"
 echo | wgcf register
 until [[ -e wgcf-account.toml ]]
 do
