@@ -301,6 +301,7 @@ fi
 }
 
 function cwarp(){
+systemctl disable wg-quick@wgcf >/dev/null 2>&1
 wg-quick down wgcf >/dev/null 2>&1
 if [ $release = "Centos" ]; then
 yum -y autoremove wireguard-tools wireguard-dkms
