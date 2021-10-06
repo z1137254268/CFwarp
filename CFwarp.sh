@@ -58,7 +58,8 @@ fi
            else
            green "wget 已安装，继续 "
 fi  
-
+sleep 1s
+yellow "等待2秒……检测vps中……"
 bit=`uname -m`
 version=`uname -r | awk -F "-" '{print $1}'`
 main=`uname  -r | awk -F . '{print $1 }'`
@@ -335,6 +336,7 @@ apt -y autoremove wireguard-tools wireguard-dkms
 fi
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 sed -i '/wgcf/d' /var/spool/cron/root >/dev/null 2>&1
+sed -i '/wgcf/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 }
 
