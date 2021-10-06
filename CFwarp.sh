@@ -47,14 +47,14 @@ fi
 
 if ! type curl >/dev/null 2>&1; then
 	   yellow "curl 未安装，安装中 "
-           apt update -y && apt install curl -y && yum install curl -y >/dev/null 2>&1
+           apt update -y && apt install curl -y ; yum install curl -y >/dev/null 2>&1
            else
            green "curl 已安装，继续 "
 fi
 
         if ! type wget >/dev/null 2>&1; then
            yellow "wget 未安装 安装中 "
-           apt update -y && apt install wget -y && yum install wget -y >/dev/null 2>&1
+           apt update -y && apt install wget -y ; yum install wget -y >/dev/null 2>&1
            else
            green "wget 已安装，继续 "
 fi  
@@ -222,6 +222,27 @@ mv -f wgcf-account.toml /etc/wireguard/wgcf-account.toml
 systemctl enable wg-quick@wgcf >/dev/null 2>&1
 wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
+
+ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+if [ ${release} = "Centos" ]; then  
+yum install vixie-cron crontabs
+chkconfig crond on
+systemctl start crond.service
+sed -i '/wgcf/d' /var/spool/cron/root >/dev/null 2>&1
+echo "0 3 * * * /usr/bin/wg-quick down wgcf >/dev/null 2>&1; /bin/systemctl restart wg-quick@wgcf>/dev/null 2>&1" >> /var/spool/cron/root
+chmod 777 /var/spool/cron/root
+crontab /var/spool/cron/root
+systemctl restart crond.service
+else
+apt install cron
+sed -i '/wgcf/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
+echo "0 3 * * * /usr/bin/wg-quick down wgcf >/dev/null 2>&1; /bin/systemctl restart wg-quick@wgcf>/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+chmod 777 /var/spool/cron/crontabs/root
+crontab /var/spool/cron/crontabs/root
+systemctl restart cron.service
+fi
+}
+
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
@@ -313,6 +334,7 @@ else
 apt -y autoremove wireguard-tools wireguard-dkms
 fi
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
+sed -i '/wgcf/d' /var/spool/cron/root >/dev/null 2>&1
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 }
 
@@ -347,28 +369,6 @@ wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.60_
 
 function reboot(){
 reboot
-}
-
-function dsreboot(){
-ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
-if [ ${release} = "Centos" ]; then  
-yum install vixie-cron crontabs
-chkconfig crond on
-systemctl start crond.service
-sed -i '/reboot/d' /var/spool/cron/root >/dev/null 2>&1
-echo "0 3 * * * /sbin/reboot >/dev/null 2>&1" >> /var/spool/cron/root
-chmod 777 /var/spool/cron/root
-crontab /var/spool/cron/root
-systemctl restart crond.service
-fi
-if [[ ${release} = "Debian" || ${release} = "Ubuntu" ]]; then
-apt install cron
-sed -i '/reboot/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
-echo "0 3 * * * /sbin/reboot >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
-chmod 777 /var/spool/cron/crontabs/root
-crontab /var/spool/cron/crontabs/root
-systemctl restart cron.service
-fi
 }
 
 function dns(){
