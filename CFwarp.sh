@@ -266,6 +266,12 @@ blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
+function warpplus(){
+apt -y install python3 && yum -y install python3 >/dev/null 2>&1
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/warp-plus/wp.py
+python3 wp.py
+}
+
 function upcore(){
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/ucore.sh && chmod +x ucore.sh && ./ucore.sh
 }
@@ -418,7 +424,7 @@ function start_menu(){
     
     white " ------------------------------------------------------------------------------------------------"
     
-    green " 14. 默认每天3点重启VPS一次 "
+    green " 14. WARP+账户无限刷流量 "
     
     green " 15. 卸载WARP功能 "
     
@@ -483,7 +489,7 @@ function start_menu(){
            ABC1=${ud4ud6} && ABC2=${c5}; ins
 	;;
 	14 )
-           dsreboot
+           warpplus
 	;;
 	15 )
            cwarp
