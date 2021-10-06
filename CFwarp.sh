@@ -223,18 +223,19 @@ systemctl enable wg-quick@wgcf >/dev/null 2>&1
 wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
 
+green "每天3点重启WGCF功能，防止WARP无法启动问题"
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 if [ ${release} = "Centos" ]; then  
-yum install vixie-cron crontabs
-chkconfig crond on
-systemctl start crond.service
+yum install vixie-cron crontabs >/dev/null 2>&1
+chkconfig crond on >/dev/null 2>&1
+systemctl start crond.service >/dev/null 2>&1
 sed -i '/wgcf/d' /var/spool/cron/root >/dev/null 2>&1
 echo "0 3 * * * /usr/bin/wg-quick down wgcf >/dev/null 2>&1; /bin/systemctl restart wg-quick@wgcf>/dev/null 2>&1" >> /var/spool/cron/root
 chmod 777 /var/spool/cron/root
 crontab /var/spool/cron/root
 systemctl restart crond.service
 else
-apt install cron
+apt install cron >/dev/null 2>&1
 sed -i '/wgcf/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
 echo "0 3 * * * /usr/bin/wg-quick down wgcf >/dev/null 2>&1; /bin/systemctl restart wg-quick@wgcf>/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 chmod 777 /var/spool/cron/crontabs/root
