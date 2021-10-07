@@ -235,21 +235,22 @@ systemctl enable wg-quick@wgcf >/dev/null 2>&1
 wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
 
-yellow "设置每天3点重启WGCF功能，防止WARP突然失效问题"
+yellow "设置每天3点自动刷新WGCF功能，防止WARP突然失效问题"
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/sp.sh >/dev/null 2>&1
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 if [ ${release} = "Centos" ]; then  
 yum install vixie-cron crontabs >/dev/null 2>&1
 chkconfig crond on >/dev/null 2>&1
 systemctl start crond.service >/dev/null 2>&1
-sed -i '/wgcf/d' /var/spool/cron/root >/dev/null 2>&1
-echo "0 3 * * * /usr/bin/wg-quick down wgcf >/dev/null 2>&1; /bin/systemctl restart wg-quick@wgcf>/dev/null 2>&1" >> /var/spool/cron/root
+sed -i '/sp.sh/d' /var/spool/cron/root >/dev/null 2>&1
+echo "0 3 * * * /root/sp.sh >/dev/null 2>&1" >> /var/spool/cron/root
 chmod 777 /var/spool/cron/root
 crontab /var/spool/cron/root
 systemctl restart crond.service
 else
 apt install cron >/dev/null 2>&1
-sed -i '/wgcf/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
-echo "0 3 * * * /usr/bin/wg-quick down wgcf >/dev/null 2>&1; /bin/systemctl restart wg-quick@wgcf>/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
+echo "0 3 * * * /root/sp.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 chmod 777 /var/spool/cron/crontabs/root
 crontab /var/spool/cron/crontabs/root
 systemctl restart cron.service
@@ -346,10 +347,10 @@ yum -y autoremove wireguard-tools wireguard-dkms
 else 
 apt -y autoremove wireguard-tools wireguard-dkms
 fi
-rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
-sed -i '/wgcf/d' /var/spool/cron/root >/dev/null 2>&1
-sed -i '/wgcf/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
+sed -i '/sp.sh/d' /var/spool/cron/root >/dev/null 2>&1
+sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
+rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf CFwarp.sh
 }
 
 function c1warp(){
