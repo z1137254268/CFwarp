@@ -1,3 +1,4 @@
+#!/usr/bin/env bash
 
 wg-quick down wgcf
 systemctl restart wg-quick@wgcf
