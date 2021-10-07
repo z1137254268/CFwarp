@@ -224,7 +224,7 @@ systemctl enable wg-quick@wgcf >/dev/null 2>&1
 wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
 
-green "每天3点重启WGCF功能，防止WARP无法启动问题"
+yellow "设置每天3点重启WGCF功能，防止WARP突然失效问题"
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 if [ ${release} = "Centos" ]; then  
 yum install vixie-cron crontabs >/dev/null 2>&1
@@ -243,6 +243,7 @@ chmod 777 /var/spool/cron/crontabs/root
 crontab /var/spool/cron/crontabs/root
 systemctl restart cron.service
 fi
+green "设置完成"
 
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
