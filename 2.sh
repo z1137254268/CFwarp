@@ -149,10 +149,8 @@ exit 0
 fi
 fi
 
-if [[ ${vi} == " lxc" ]]; then true
-if [ $release = "Centos" ]; then
+if [[ ${vi} == " lxc" ]] && [ $release = "Centos" ]; then
 echo -e nameserver 2001:67c:2960:6464:6464:6464:6464:6464 > /etc/resolv.conf
-fi
 fi
 
 if [ $release = "Centos" ]; then  
