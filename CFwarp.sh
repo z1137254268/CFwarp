@@ -302,6 +302,63 @@ blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
+function warpip(){
+wg-quick down wgcf
+systemctl restart wg-quick@wgcf
+wg-quick up wgcf
+v4=$(wget -T1 -t1 -qO- -4 ip.gs)
+v6=$(wget -T1 -t1 -qO- -6 ip.gs)
+until [[ -n $v4 || -n $v6 ]]
+do
+wg-quick down wgcf
+wg-quick up wgcf
+v4=$(wget -T1 -t1 -qO- -4 ip.gs)
+v6=$(wget -T1 -t1 -qO- -6 ip.gs)
+done
+v44=`wget -T1 -t1 -qO- -4 ip.gs`
+if [[ -n ${v44} ]]; then
+gj4=`curl -s4 https://ip.gs/country-iso`
+g4=$(eval echo \$$gj4)
+WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
+case ${WARPIPv4Status} in 
+plus) 
+WARPIPv4Status=$(green "WARP+PLUS已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
+;;  
+on) 
+WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
+;; 
+off) 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在区域：$g4")
+esac 
+else
+WARPIPv4Status=$(red "不存在IPV4地址 ")
+fi 
+
+v66=`wget -T1 -t1 -qO- -6 ip.gs`
+if [[ -n ${v66} ]]; then 
+gj6=`curl -s6 https://ip.gs/country-iso`
+g6=$(eval echo \$$gj6)
+WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
+case ${WARPIPv6Status} in 
+plus) 
+WARPIPv6Status=$(green "WARP+PLUS已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
+;;  
+on) 
+WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
+;; 
+off) 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
+esac 
+else
+WARPIPv6Status=$(red "不存在IPV6地址 ")
+fi 
+
+green "安装结束，当前WARP及IP状态如下 "
+blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
+blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+}
+}
+
 function warpplus(){
 if [ $release = "Centos" ]; then
 yum -y install python3
