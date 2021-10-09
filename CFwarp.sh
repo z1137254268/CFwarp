@@ -235,7 +235,7 @@ systemctl enable wg-quick@wgcf >/dev/null 2>&1
 wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
 
-yellow "设置每天3点自动刷新WGCF功能，防止WARP突然失效问题"
+yellow "设置每天3点自动刷新WGCF功能"
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/sp.sh >/dev/null 2>&1
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 if [ ${release} = "Centos" ]; then  
@@ -412,10 +412,12 @@ green "WARP卸载完成"
 
 function c1warp(){
 wg-quick down wgcf
+green "临时关闭WARP成功"
 }
 
 function owarp(){
 wg-quick up wgcf
+green "恢复开启WARP成功"
 }
 
 function macka(){
