@@ -451,14 +451,6 @@ function reboot(){
 reboot
 }
 
-function dns(){
-echo 'DNS=8.8.8.8 2001:4860:4860::8888'>> /etc/systemd/resolved.conf
-systemctl restart systemd-resolved
-systemctl enable systemd-resolved
-mv /etc/resolv.conf  /etc/resolv.conf.bak
-ln -s /run/systemd/resolve/resolv.conf /etc/
-sudo reboot
-}
 
 function status(){
 systemctl status wg-quick@wgcf
@@ -484,7 +476,7 @@ function start_menu(){
     
     green " 1.  永久开启甲骨文VPS的ubuntu系统所有端口 "
     
-    green " 2.  更新系统内核 "
+    green " 2.  系统内核版本5.6以下更新内核 "
     
     green " 3.  开启原生BBR加速 "
     
@@ -520,7 +512,7 @@ function start_menu(){
     
     green " 17. 临时关闭WARP功能 "
     
-    green " 18. 恢复开启WARP功能 "
+    green " 18. 临时关闭后开启WARP功能 "
     
     white " ==================三、代理协议脚本选择（更新中）==========================================="
     
