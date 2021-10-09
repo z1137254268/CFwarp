@@ -300,8 +300,8 @@ WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
 green "安装结束，当前WARP及IP状态如下 "
-blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
-blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
+blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function warpip(){
@@ -356,8 +356,8 @@ WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
 green "刷新IP成功，当前WARP及IP状态如下 "
-blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
-blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
+blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function warpplus(){
@@ -468,7 +468,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/ma
 #主菜单
 function start_menu(){
     clear
-    green " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃" 
+    bblue " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃" 
     
     red " 切记：进入脚本快捷方式 bash CFwarp.sh "
     
