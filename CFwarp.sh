@@ -472,43 +472,41 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/ma
 #主菜单
 function start_menu(){
     clear
-    yellow " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃" 
+    green " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃" 
     
     red " 切记：进入脚本快捷方式 bash CFwarp.sh "
     
     white " ==================一、VPS相关调整选择（更新中）==========================================" 
     
-    green " 1. 永久开启甲骨文VPS的ubuntu系统所有端口 "
+    green " 1.  永久开启甲骨文VPS的ubuntu系统所有端口 "
     
-    green " 2. 更新系统内核 "
+    green " 2.  更新系统内核 "
     
-    green " 3. 开启原生BBR加速 "
+    green " 3.  开启原生BBR加速 "
     
-    green " 4. 检测奈飞Netflix是否解锁 "
+    green " 4.  检测奈飞Netflix是否解锁 "
     
     white " ==================二、WARP功能选择（更新中）======================================"
     
-    yellow " ----VPS原生IP数------------------------------------添加WARP虚拟IP的位置--------------"
+    green " 5.  VPS纯IPV4        >> 添加WARP虚拟IPV4               "
     
-    green " 5. 纯IPV4的VPS。                                         添加WARP虚拟IPV4               "
+    green " 6.  VPS纯IPV4        >> 添加WARP虚拟IPV6      "
     
-    green " 6. 纯IPV4的VPS。                                         添加WARP虚拟IPV6      "
+    green " 7.  VPS纯IPV4        >> 添加WARP虚拟IPV4+虚拟IPV6              "
+    white " ---------------------------------------------------------------------------------"   
+    green " 8.  VPS纯IPV6        >> 添加WARP虚拟IPV4               "
     
-    green " 7. 纯IPV4的VPS。                                         添加WARP虚拟IPV4+虚拟IPV6              "
+    green " 9.  VPS纯IPV6        >> 添加WARP虚拟IPV6     "
     
-    green " 8. 纯IPV6的VPS。                                         添加WARP虚拟IPV4               "
+    green " 10. VPS纯IPV6        >> 添加WARP虚拟IPV4+虚拟IPV6               " 
+    white " ---------------------------------------------------------------------------------"
+    green " 11. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV4               "
     
-    green " 9. 纯IPV6的VPS。                                         添加WARP虚拟IPV6     "
+    green " 12. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV6      "
     
-    green " 10. 纯IPV6的VPS。                                        添加WARP虚拟IPV4+虚拟IPV6               " 
+    green " 13. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV4+虚拟IPV6               "
     
-    green " 11. 双栈IPV4+IPV6的VPS。                                  添加WARP虚拟IPV4               "
-    
-    green " 12. 双栈IPV4+IPV6的VPS。                                  添加WARP虚拟IPV6      "
-    
-    green " 13. 双栈IPV4+IPV6的VPS。                                  添加WARP虚拟IPV4+虚拟IPV6               "
-    
-    white " ------------------------------------------------------------------------------------------------"
+    white " ---------------------------------------------------------------------------------"
     
     green " 14. 获取WARP+账户无限刷流量 "
     
