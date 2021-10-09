@@ -353,10 +353,9 @@ else
 WARPIPv6Status=$(red "不存在IPV6地址 ")
 fi 
 
-green "安装结束，当前WARP及IP状态如下 "
+green "刷新IP成功，当前WARP及IP状态如下 "
 blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
-}
 }
 
 function warpplus(){
@@ -511,27 +510,25 @@ function start_menu(){
     
     white " ------------------------------------------------------------------------------------------------"
     
-    green " 14. WARP+账户无限刷流量 "
+    green " 14. 获取WARP+账户无限刷流量 "
     
-    green " 15. 卸载WARP功能 "
+    green " 15. 重启WARP并刷新WARP的IP"
     
-    green " 16. 临时关闭WARP功能 "
+    green " 16. 卸载WARP功能 "
     
-    green " 17. 恢复开启WARP功能 "
+    green " 17. 临时关闭WARP功能 "
+    
+    green " 18. 恢复开启WARP功能 "
     
     white " ==================三、代理协议脚本选择（更新中）==========================================="
     
-    green " 18.使用mack-a脚本（支持Xray, V2ray） "
+    green " 19.使用mack-a脚本（支持Xray, V2ray） "
     
-    green " 19.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
+    green " 20.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
     
     white " ============================================================================================="
     
-    green " 20. 重启VPS实例，请重新连接SSH "
-    
-    white " ===============================================================================================" 
-    
-    green " 0. 退出脚本 "
+    red " 0. 退出脚本 "
     Print_ALL_Status_menu
     echo
     read -p "请输入数字:" menuNumberInput
@@ -579,22 +576,22 @@ function start_menu(){
            warpplus
 	;;
 	15 )
+           warpip
+	;;	
+	16 )
            cwarp
 	;;
-	16 )
+	17 )
            c1warp
 	;;
-	17 )
+	18 )
            owarp
 	;;
-	18 )
+	19 )
            macka
 	;;
-	19 )
-           phlinhng
-	;;
 	20 )
-           reboot
+           phlinhng
 	;;
         0 )
            exit 1
