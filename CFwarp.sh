@@ -474,7 +474,7 @@ function start_menu(){
     
     green " 1.  永久开启甲骨文VPS的ubuntu系统所有端口 "
     
-    green " 2.  系统内核版本5.6以下更新内核 "
+    green " 2.  为5.6以下系统内核更新至5.6以上 "
     
     green " 3.  开启原生BBR加速 "
     
