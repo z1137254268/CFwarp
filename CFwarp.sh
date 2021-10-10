@@ -235,7 +235,7 @@ systemctl enable wg-quick@wgcf >/dev/null 2>&1
 wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
 
-yellow "设置重启VPS时;每天3点时，自动刷新WARP功能"
+yellow "设置重启VPS时，自动刷新WARP功能"
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/sp.sh >/dev/null 2>&1
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 if [ ${release} = "Centos" ]; then  
@@ -243,7 +243,6 @@ yum install vixie-cron crontabs >/dev/null 2>&1
 chkconfig crond on >/dev/null 2>&1
 systemctl start crond.service >/dev/null 2>&1
 sed -i '/sp.sh/d' /var/spool/cron/root >/dev/null 2>&1
-echo "0 3 * * * /root/sp.sh >/dev/null 2>&1" >> /var/spool/cron/root
 echo "@reboot /root/sp.sh >/dev/null 2>&1" >> /var/spool/cron/root
 chmod 777 /var/spool/cron/root
 crontab /var/spool/cron/root
@@ -251,7 +250,6 @@ systemctl restart crond.service
 else
 apt install cron >/dev/null 2>&1
 sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
-echo "0 3 * * * /root/sp.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 echo "@reboot /root/sp.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 chmod 777 /var/spool/cron/crontabs/root
 crontab /var/spool/cron/crontabs/root
