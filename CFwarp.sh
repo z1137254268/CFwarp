@@ -504,7 +504,7 @@ function start_menu(){
     
     green " 14. 获取WARP+账户无限刷流量 "
     
-    green " 15. 重启WARP并刷新WARP的IP"
+    green " 15. 手动刷新WARP的IP(WARP防失联)"
     
     green " 16. 卸载WARP功能 "
     
