@@ -47,14 +47,14 @@ fi
 
 if ! type curl >/dev/null 2>&1; then
 	   yellow "curl 未安装，安装中 "
-           apt update -y && apt install curl -y ; yum install curl -y >/dev/null 2>&1
+           apt update -y && apt install curl -y ; yum -y update && yum install curl -y >/dev/null 2>&1
            else
            green "curl 已安装，继续 "
 fi
 
         if ! type wget >/dev/null 2>&1; then
            yellow "wget 未安装 安装中 "
-           apt update -y && apt install wget -y ; yum install wget -y >/dev/null 2>&1
+           apt update -y && apt install wget -y ; yum -y update && yum install wget -y >/dev/null 2>&1
            else
            green "wget 已安装，继续 "
 fi  
@@ -68,7 +68,7 @@ rv4=`ip a | grep global | awk 'NR==1 {print $2}' | cut -d'/' -f1`
 rv6=`ip a | grep inet6 | awk 'NR==2 {print $2}' | cut -d'/' -f1`
 op=`hostnamectl | grep -i Operating | awk -F ':' '{print $2}'`
 vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
-AE="阿联酋";AU="澳大利亚";BR="巴西";CA="加拿大";CH="瑞士";CL="智利";CN="中国";DE="德国";ES="西班牙";FI="芬兰";FR="法国";HK="香港";ID="印尼";IE="爱尔兰";IN="印度";IT="意大利";JP="日本";KR="韩国";MY="马来西亚";NL="荷兰";NZ="新西兰";PH="菲律宾";RU="俄罗斯";SA="沙特";SE="瑞典";SG="新加坡";TW="台湾";UK="英国";US="美国";VN="越南";ZA="南非"
+AE="阿联酋";AU="澳大利亚";BR="巴西";CA="加拿大";CH="瑞士";CL="智利";CN="中国";DE="德国";ES="西班牙";FI="芬兰";FR="法国";HK="香港";ID="印尼";IE="爱尔兰";IL="以色列";IN="印度";IT="意大利";JP="日本";KR="韩国";MY="马来西亚";NL="荷兰";NZ="新西兰";PH="菲律宾";RU="俄罗斯";SA="沙特";SE="瑞典";SG="新加坡";TW="台湾";UK="英国";US="美国";VN="越南";ZA="南非"
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
@@ -196,6 +196,7 @@ if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
 
+mkdir -p /etc/wireguard/ >/dev/null 2>&1
 yellow "执行过程可能会多次提示429 Too Many Requests，请耐心等待。"
 echo | wgcf register
 until [[ -e wgcf-account.toml ]]
