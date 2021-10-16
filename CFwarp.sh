@@ -304,59 +304,7 @@ blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function warpip(){
-wg-quick down wgcf
-systemctl restart wg-quick@wgcf
-wg-quick up wgcf
-v4=$(wget -T1 -t1 -qO- -4 ip.gs)
-v6=$(wget -T1 -t1 -qO- -6 ip.gs)
-until [[ -n $v4 || -n $v6 ]]
-do
-wg-quick down wgcf
-wg-quick up wgcf
-v4=$(wget -T1 -t1 -qO- -4 ip.gs)
-v6=$(wget -T1 -t1 -qO- -6 ip.gs)
-done
-v44=`wget -T1 -t1 -qO- -4 ip.gs`
-if [[ -n ${v44} ]]; then
-gj4=`curl -s4 https://ip.gs/country-iso`
-g4=$(eval echo \$$gj4)
-WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
-case ${WARPIPv4Status} in 
-plus) 
-WARPIPv4Status=$(green "WARP+PLUS已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
-;;  
-on) 
-WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
-;; 
-off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在区域：$g4")
-esac 
-else
-WARPIPv4Status=$(red "不存在IPV4地址 ")
-fi 
-
-v66=`wget -T1 -t1 -qO- -6 ip.gs`
-if [[ -n ${v66} ]]; then 
-gj6=`curl -s6 https://ip.gs/country-iso`
-g6=$(eval echo \$$gj6)
-WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
-case ${WARPIPv6Status} in 
-plus) 
-WARPIPv6Status=$(green "WARP+PLUS已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-;;  
-on) 
-WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-;; 
-off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-esac 
-else
-WARPIPv6Status=$(red "不存在IPV6地址 ")
-fi 
-
-green "刷新IP成功，当前WARP及IP状态如下 "
-blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
-blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+chmod +x sp.sh && ./sp.sh
 }
 
 function warpplus(){
@@ -383,16 +331,16 @@ sudo reboot
 }
 
 function BBR(){
-if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
+if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
+red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
+sleep 2s
+start_menu
+else 
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
 lsmod | grep bbr
 green "安装原生BBR加速成功"
-else 
-red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
-sleep 2s
-start_menu
 fi
 }
 
@@ -446,21 +394,7 @@ wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.61_
 fi
 }
 
-function reboot(){
-reboot
-}
-
-
-function status(){
-systemctl status wg-quick@wgcf
-}
-
 function up4(){
-wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
-}
-
-function up6(){
-echo -e nameserver 2001:67c:2960:6464:6464:6464:6464:6464 > /etc/resolv.conf
 wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 }
 
@@ -505,7 +439,7 @@ function start_menu(){
     
     green " 14. 获取WARP+账户无限刷流量 "
     
-    green " 15. 手动刷新WARP的IP(WARP防失联)"
+    green " 15. 手动无限刷新WARP的IP(WARP防失联)"
     
     green " 16. 卸载WARP功能 "
     
