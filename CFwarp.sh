@@ -29,35 +29,43 @@ rm -f CFwarp.sh
 exit 0
 fi
 
-	if [[ -f /etc/redhat-release ]]; then
-		release="Centos"
-	elif cat /etc/issue | grep -q -E -i "debian"; then
-		release="Debian"
-	elif cat /etc/issue | grep -q -E -i "ubuntu"; then
-		release="Ubuntu"
-	elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
-		release="Centos"
-	elif cat /proc/version | grep -q -E -i "debian"; then
-		release="Debian"
-	elif cat /proc/version | grep -q -E -i "ubuntu"; then
-		release="Ubuntu"
-	elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
-		release="Centos"
-    fi
-
-if ! type curl >/dev/null 2>&1; then
-	   yellow "curl 未安装，安装中 "
-           apt update -y && apt install curl -y ; yum -y update && yum install curl -y >/dev/null 2>&1
-           else
-           green "curl 已安装，继续 "
+if [[ -f /etc/redhat-release ]]; then
+release="Centos"
+elif cat /etc/issue | grep -q -E -i "debian"; then
+release="Debian"
+elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+release="Ubuntu"
+elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+release="Centos"
+elif cat /proc/version | grep -q -E -i "debian"; then
+release="Debian"
+elif cat /proc/version | grep -q -E -i "ubuntu"; then
+release="Ubuntu"
+elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
+release="Centos"
 fi
 
-        if ! type wget >/dev/null 2>&1; then
-           yellow "wget 未安装 安装中 "
-           apt update -y && apt install wget -y ; yum -y update && yum install wget -y >/dev/null 2>&1
-           else
-           green "wget 已安装，继续 "
-fi  
+if ! type curl >/dev/null 2>&1; then 
+if [ $release = "Centos" ]; then
+yellow "curl 未安装，安装中 "
+yum -y update && yum install curl -y
+else
+apt update -y && apt install curl -y
+fi	   
+else
+green "curl 已安装，继续 "
+fi
+
+if ! type wget >/dev/null 2>&1; then 
+if [ $release = "Centos" ]; then
+yellow "curl wget，安装中 "
+yum -y update && yum install wget -y
+else
+apt update -y && apt install wget -y
+fi	   
+else
+green "wget 已安装，继续 "
+fi 
 sleep 1s
 yellow "等待2秒……检测vps中……"
 bit=`uname -m`
@@ -157,7 +165,7 @@ fi
 if [ $release = "Centos" ]; then  
 yum -y install epel-release
 yum -y install curl net-tools wireguard-tools	
-if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then true
+if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then 
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
 curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
 yum -y install epel-release wireguard-dkms
@@ -171,7 +179,7 @@ apt -y install lsb-release
 echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
 apt update -y
 apt -y --no-install-recommends install net-tools iproute2 openresolv dnsutils wireguard-tools               		
-if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then true
+if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then 
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
 apt -y --no-install-recommends install linux-headers-$(uname -r);apt -y --no-install-recommends install wireguard-dkms
 fi
