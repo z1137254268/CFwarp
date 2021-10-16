@@ -45,7 +45,7 @@ elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
 release="Centos"
 fi
 
-if ! type curl >/dev/null 2>&1; then true
+if ! type curl >/dev/null 2>&1; then 
 if [ $release = "Centos" ]; then
 yellow "curl 未安装，安装中 "
 yum -y update && yum install curl -y
@@ -56,7 +56,7 @@ else
 green "curl 已安装，继续 "
 fi
 
-if ! type wget >/dev/null 2>&1; then true
+if ! type wget >/dev/null 2>&1; then 
 if [ $release = "Centos" ]; then
 yellow "curl wget，安装中 "
 yum -y update && yum install wget -y
@@ -166,7 +166,7 @@ fi
 if [ $release = "Centos" ]; then  
 yum -y install epel-release
 yum -y install curl net-tools wireguard-tools	
-if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then true
+if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
 curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
 yum -y install epel-release wireguard-dkms
@@ -180,7 +180,7 @@ apt -y install lsb-release
 echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
 apt update -y
 apt -y --no-install-recommends install net-tools iproute2 openresolv dnsutils wireguard-tools               		
-if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then true
+if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
 apt -y --no-install-recommends install linux-headers-$(uname -r);apt -y --no-install-recommends install wireguard-dkms
 fi
@@ -393,7 +393,7 @@ sudo reboot
 
 function BBR(){
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
-if [[ -n ${v44} ]]; then true
+if [[ -n ${v44} ]]; then 
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
