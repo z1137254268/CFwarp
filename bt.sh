@@ -392,21 +392,16 @@ sudo reboot
 }
 
 function BBR(){
-v44=`wget -T1 -t1 -qO- -4 ip.gs`
-if [[ -n ${v44} ]]; then 
-if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
+if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
+red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
+sleep 2s
+start_menu
+else 
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
 sysctl -p
 lsmod | grep bbr
 green "安装原生BBR加速成功"
-else 
-red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
-sleep 2s
-start_menu
-fi
-else
-red " 无ipv4,不支持BBR加速 "
 fi
 }
 
