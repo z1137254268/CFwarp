@@ -313,7 +313,7 @@ blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function warpip(){
-wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/sp.sh && chmod +x sp.sh && ./sp.sh
+chmod +x sp.sh && ./sp.sh
 }
 
 function warpplus(){
@@ -478,11 +478,6 @@ fi
 }
 
 function up4(){
-wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
-}
-
-function up6(){
-echo -e nameserver 2001:67c:2960:6464:6464:6464:6464:6464 > /etc/resolv.conf
 wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 }
 
