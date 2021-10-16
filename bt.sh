@@ -29,35 +29,44 @@ rm -f CFwarp.sh
 exit 0
 fi
 
-	if [[ -f /etc/redhat-release ]]; then
-		release="Centos"
-	elif cat /etc/issue | grep -q -E -i "debian"; then
-		release="Debian"
-	elif cat /etc/issue | grep -q -E -i "ubuntu"; then
-		release="Ubuntu"
-	elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
-		release="Centos"
-	elif cat /proc/version | grep -q -E -i "debian"; then
-		release="Debian"
-	elif cat /proc/version | grep -q -E -i "ubuntu"; then
-		release="Ubuntu"
-	elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
-		release="Centos"
-    fi
-
-if ! type curl >/dev/null 2>&1; then
-	   yellow "curl 未安装，安装中 "
-           apt update -y && apt install curl -y ; yum -y update && yum install curl -y >/dev/null 2>&1
-           else
-           green "curl 已安装，继续 "
+if [[ -f /etc/redhat-release ]]; then
+release="Centos"
+elif cat /etc/issue | grep -q -E -i "debian"; then
+release="Debian"
+elif cat /etc/issue | grep -q -E -i "ubuntu"; then
+release="Ubuntu"
+elif cat /etc/issue | grep -q -E -i "centos|red hat|redhat"; then
+release="Centos"
+elif cat /proc/version | grep -q -E -i "debian"; then
+release="Debian"
+elif cat /proc/version | grep -q -E -i "ubuntu"; then
+release="Ubuntu"
+elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
+release="Centos"
 fi
 
-        if ! type wget >/dev/null 2>&1; then
-           yellow "wget 未安装 安装中 "
-           apt update -y && apt install wget -y ; yum -y update && yum install wget -y >/dev/null 2>&1
-           else
-           green "wget 已安装，继续 "
-fi  
+if ! type curl >/dev/null 2>&1; then true
+if [ $release = "Centos" ]; then
+yellow "curl 未安装，安装中 "
+yum -y update && yum install curl -y
+else
+apt update -y && apt install curl -y
+fi	   
+else
+green "curl 已安装，继续 "
+fi
+
+if ! type wget >/dev/null 2>&1; then true
+if [ $release = "Centos" ]; then
+yellow "curl wget，安装中 "
+yum -y update && yum install wget -y
+else
+apt update -y && apt install wget -y
+fi	   
+else
+green "wget 已安装，继续 "
+fi
+  
 sleep 1s
 yellow "等待2秒……检测vps中……"
 bit=`uname -m`
@@ -383,6 +392,8 @@ sudo reboot
 }
 
 function BBR(){
+v44=`wget -T1 -t1 -qO- -4 ip.gs`
+if [[ -n ${v44} ]]; then true
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
 echo "net.ipv4.tcp_congestion_control=bbr" >> /etc/sysctl.conf
@@ -393,6 +404,9 @@ else
 red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
 sleep 2s
 start_menu
+fi
+else
+red " 无ipv4,不支持BBR加速 "
 fi
 }
 
@@ -414,11 +428,15 @@ green "WARP卸载完成"
 function c1warp(){
 wg-quick down wgcf
 green "临时关闭WARP成功"
+blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
+blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function owarp(){
 wg-quick up wgcf
 green "恢复开启WARP成功"
+blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
+blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function macka(){
