@@ -123,7 +123,7 @@ c1="sed -i '/0\.0\.0\.0\/0/d' wgcf-profile.conf"
 c2="sed -i '/\:\:\/0/d' wgcf-profile.conf"
 c3="sed -i 's/engage.cloudflareclient.com/162.159.192.1/g' wgcf-profile.conf"
 c4="sed -i 's/engage.cloudflareclient.com/2606:4700:d0::a29f:c001/g' wgcf-profile.conf"
-c5="sed -i 's#1.1.1.1#8.8.8.8,2001:4860:4860::8888#g' wgcf-profile.conf"
+c5="sed -i 's/DNS = 1.1.1.1/DNS = 8.8.8.8,2001:4860:4860::8888/g' wgcf-profile.conf"
 c6="sed -i 's/1.1.1.1/2001:4860:4860::8888,8.8.8.8/g' wgcf-profile.conf"
 
 Print_ALL_Status_menu() {
