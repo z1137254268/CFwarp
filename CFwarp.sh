@@ -148,7 +148,7 @@ tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 if [[ -n ${tun} ]]; then
 case ${tun} in 
 tun)
-green "经检测，已开启TUN，安装wireguard-go模式的WARP(+)"
+green "lxc或者openvz小鸡已开启TUN，安装wireguard-go模式的WARP(+)"
 esac
 else
 red "你的lxc或者openvz小鸡未开启TUN，无法启动warp(+)，自动退出"
@@ -156,7 +156,7 @@ exit 0
 fi
 fi
 
-if [[ ${vi} == " lxc" ]]; then true
+if [[ ${vi} == " lxc" ]]; then
 if [ $release = "Centos" ]; then
 echo -e nameserver 2001:67c:2960:6464:6464:6464:6464:6464 > /etc/resolv.conf
 fi
@@ -167,6 +167,7 @@ yum -y install epel-release
 yum -y install curl net-tools wireguard-tools	
 if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then 
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
+yellow "内核小于5.6版本，安装WARP内核模块模式"
 curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
 yum -y install epel-release wireguard-dkms
 fi
@@ -181,6 +182,7 @@ apt update -y
 apt -y --no-install-recommends install net-tools iproute2 openresolv dnsutils wireguard-tools               		
 if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then 
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
+yellow "内核小于5.6版本，安装WARP内核模块模式"
 apt -y --no-install-recommends install linux-headers-$(uname -r);apt -y --no-install-recommends install wireguard-dkms
 fi
 fi		
