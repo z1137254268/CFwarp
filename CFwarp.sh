@@ -196,16 +196,16 @@ exit 1
 fi
 	
 if [[ ${bit} == "x86_64" ]]; then
-wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf-amd -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
+wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_amd64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
 elif [[ ${bit} == "aarch64" ]]; then
-wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf-arm -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
+wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_arm64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
 fi
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
 
 mkdir -p /etc/wireguard/ >/dev/null 2>&1
-yellow "执行过程可能会多次提示429 Too Many Requests，请耐心等待。"
+yellow "执行申请WARP账户中……过程可能会多次提示：429 Too Many Requests，请耐心等待。"
 echo | wgcf register
 until [[ -e wgcf-account.toml ]]
 do
@@ -213,11 +213,12 @@ sleep 1s
 echo | wgcf register
 done
 
-read -p "继续使用原WARP账户请“回车”跳过；启用WARP+PLUS账户，请复制WARP+的按键许可证秘钥(26个字符):" ID
+yellow "继续使用原WARP账户请按回车跳过 \n启用WARP+PLUS账户，请复制WARP+的按键许可证秘钥(26个字符)后回车"
+read -p "按键许可证秘钥(26个字符):" ID
 if [[ -n $ID ]]; then
 sed -i "s/license_key.*/license_key = \"$ID\"/g" wgcf-account.toml
 wgcf update
-green "启用WARP+PLUS账户中……如提示400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
+green "启用WARP+PLUS账户中……如提示：400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
 fi
 wgcf generate
 
@@ -341,7 +342,7 @@ sudo reboot
 function BBR(){
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
-sleep 2s
+sleep 3s
 start_menu
 else 
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
