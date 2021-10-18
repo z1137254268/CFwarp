@@ -273,7 +273,9 @@ outbounds部分："domainStrategy"后是"UseIPv6"还是"UseIPv4"？？
 
 比如 纯v4添加虚拟6：UseIPv6。添加双栈V4+V6：UseIPv4
 
-比如 双栈添加虚拟6：UseIPv6。双栈添加虚拟4：UseIPv4。添加双栈V4+V6：？
+比如 双栈添加虚拟6：UseIPv6。双栈添加虚拟4：UseIPv4。双栈添加虚拟双栈V4+V6：？
+
+比如 双栈直接分流：UseIPv4
 
 routing部分：设置自由度太高啦！可参考IP、域名自定义德鸡IPV6教程：待发布
 
