@@ -271,7 +271,7 @@ outbounds部分："domainStrategy"后是"UseIPv6"还是"UseIPv4"？？
 
 比如 纯v6添加虚拟4：UseIPv4。添加双栈V4+V6：UseIPv6
 
-比如 纯v4添加虚拟6：UseIPv6。添加双栈V4+V6：UseIPv4
+比如 纯v4添加虚拟6：UseIPv6。添加双栈V4+V6：UseIPv6
 
 比如 双栈添加虚拟6：UseIPv6。双栈添加虚拟4：UseIPv4。双栈添加虚拟双栈V4+V6：UseIPv6
 
