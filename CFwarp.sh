@@ -227,8 +227,8 @@ echo $ABC2 | sh
 echo $ABC3 | sh
 echo $ABC4 | sh
 
-mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf
-mv -f wgcf-account.toml /etc/wireguard/wgcf-account.toml
+mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf >/dev/null 2>&1
+mv -f wgcf-account.toml /etc/wireguard/wgcf-account.toml >/dev/null 2>&1
 
 wg-quick up wgcf >/dev/null 2>&1
 v4=$(wget -T1 -t1 -qO- -4 ip.gs)
