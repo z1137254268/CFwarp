@@ -487,7 +487,7 @@ function start_menu(){
            ABC1=${ud4} && ABC2=${c2} && ABC3=${c3} && ABC4=${c5}; ins
 	;;
         6 )
-           ABC1=${c1} && ABC2=${c3} && ABC3=${c5}}; ins
+           ABC1=${c1} && ABC2=${c3} && ABC3=${c5}; ins
 	;;
         7 )
            ABC1=${ud4} && ABC2=${c3} && ABC3=${c5}; ins
