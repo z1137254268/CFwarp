@@ -141,7 +141,7 @@ white "------------------------------------------"
 }
 
 before_start_menu() {
-echo && echo -n -e $(yellow"按回车返回主菜单") && read temp
+echo && echo -n -e "按回车返回主菜单" && read temp
 start_menu
 }
 
