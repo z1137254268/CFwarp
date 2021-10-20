@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-export PATH=$PATH:/usr/local/bin
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
 
 red(){
     echo -e "\033[31m\033[01m$1\033[0m"
@@ -269,7 +270,6 @@ fi
 green "设置完成"
 
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
-source .bash_profile
 green "安装结束，当前WARP及IP状态如下 "
 blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
