@@ -225,7 +225,7 @@ read -p "按键许可证秘钥(26个字符):" ID
 if [[ -n $ID ]]; then
 sed -i "s/license_key.*/license_key = \"$ID\"/g" wgcf-account.toml
 wgcf update
-green "启用WARP+PLUS账户中……如提示：400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
+green "启用WARP+PLUS账户中，如上方显示：400 Bad Request，则使用原WARP账户,相关原因请看本项目Github说明" 
 fi
 wgcf generate
 
