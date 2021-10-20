@@ -1,4 +1,4 @@
-#!/usr/bin/env bash 
+#!/usr/bin/env bash
 export PATH=$PATH:/usr/local/bin
 
 red(){
@@ -65,8 +65,7 @@ apt update -y && apt install wget -y
 fi	   
 else
 green "wget 已安装，继续 "
-fi
-  
+fi 
 sleep 1s
 yellow "等待2秒……检测vps中……"
 bit=`uname -m`
@@ -149,7 +148,7 @@ tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 if [[ -n ${tun} ]]; then
 case ${tun} in 
 tun)
-green "经检测，已开启TUN，安装wireguard-go模式的WARP(+)"
+green "lxc或者openvz小鸡已开启TUN，安装wireguard-go模式的WARP(+)"
 esac
 else
 red "你的lxc或者openvz小鸡未开启TUN，无法启动warp(+)，自动退出"
@@ -166,8 +165,9 @@ fi
 if [ $release = "Centos" ]; then  
 yum -y install epel-release
 yum -y install curl net-tools wireguard-tools	
-if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then
+if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then 
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
+yellow "内核小于5.6版本，安装WARP内核模块模式"
 curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
 yum -y install epel-release wireguard-dkms
 fi
@@ -180,8 +180,9 @@ apt -y install lsb-release
 echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee /etc/apt/sources.list.d/backports.list
 apt update -y
 apt -y --no-install-recommends install net-tools iproute2 openresolv dnsutils wireguard-tools               		
-if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then
+if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then 
 if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
+yellow "内核小于5.6版本，安装WARP内核模块模式"
 apt -y --no-install-recommends install linux-headers-$(uname -r);apt -y --no-install-recommends install wireguard-dkms
 fi
 fi		
@@ -197,16 +198,16 @@ exit 1
 fi
 	
 if [[ ${bit} == "x86_64" ]]; then
-wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf-amd -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
+wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_amd64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf         
 elif [[ ${bit} == "aarch64" ]]; then
-wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf-arm -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
+wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_arm64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
 fi
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
 
 mkdir -p /etc/wireguard/ >/dev/null 2>&1
-yellow "执行过程可能会多次提示429 Too Many Requests，请耐心等待。"
+yellow "执行申请WARP账户中……过程可能会多次提示：429 Too Many Requests，请耐心等待。"
 echo | wgcf register
 until [[ -e wgcf-account.toml ]]
 do
@@ -214,11 +215,12 @@ sleep 1s
 echo | wgcf register
 done
 
-read -p "继续使用原WARP账户请“回车”跳过\n启用WARP+PLUS账户，请复制WARP+的按键许可证秘钥(26个字符):" ID
+yellow "继续使用原WARP账户请按回车跳过 \n启用WARP+PLUS账户，请复制WARP+的按键许可证秘钥(26个字符)后回车"
+read -p "按键许可证秘钥(26个字符):" ID
 if [[ -n $ID ]]; then
 sed -i "s/license_key.*/license_key = \"$ID\"/g" wgcf-account.toml
 wgcf update
-green "启用WARP+PLUS账户中……如提示400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
+green "启用WARP+PLUS账户中……如提示：400 bad request，则使用原WARP账户,相关原因请看本项目Github说明" 
 fi
 wgcf generate
 
@@ -227,8 +229,8 @@ echo $ABC2 | sh
 echo $ABC3 | sh
 echo $ABC4 | sh
 
-mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf
-mv -f wgcf-account.toml /etc/wireguard/wgcf-account.toml
+mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf >/dev/null 2>&1
+mv -f wgcf-account.toml /etc/wireguard/wgcf-account.toml >/dev/null 2>&1
 
 wg-quick up wgcf >/dev/null 2>&1
 v4=$(wget -T1 -t1 -qO- -4 ip.gs)
@@ -246,28 +248,28 @@ wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
 
 yellow "设置重启VPS时，自动刷新WARP功能"
-wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/sp1.sh >/dev/null 2>&1
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/sp.sh >/dev/null 2>&1
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 if [ ${release} = "Centos" ]; then  
 yum install vixie-cron crontabs >/dev/null 2>&1
 chkconfig crond on >/dev/null 2>&1
 systemctl start crond.service >/dev/null 2>&1
-sed -i '/sp1.sh/d' /var/spool/cron/root >/dev/null 2>&1
-echo "@reboot /root/sp1.sh >/dev/null 2>&1" >> /var/spool/cron/root
+sed -i '/sp.sh/d' /var/spool/cron/root >/dev/null 2>&1
+echo "@reboot /root/sp.sh >/dev/null 2>&1" >> /var/spool/cron/root
 chmod 777 /var/spool/cron/root
 crontab /var/spool/cron/root
 systemctl restart crond.service
 else
 apt install cron >/dev/null 2>&1
-sed -i '/sp1.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
-echo "@reboot /root/sp1.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
+sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
+echo "@reboot /root/sp.sh >/dev/null 2>&1" >> /var/spool/cron/crontabs/root
 chmod 777 /var/spool/cron/crontabs/root
 crontab /var/spool/cron/crontabs/root
 systemctl restart cron.service
 fi
 green "设置完成"
 
-grep -qE '^[ ]*label[ ]*2002::/16[ ]*2' /etc/gai.conf || echo 'label 2002::/16   2' | sudo tee -a /etc/gai.conf
+[[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
@@ -313,7 +315,7 @@ blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 }
 
 function warpip(){
-chmod +x sp1.sh && ./sp1.sh
+chmod +x sp.sh && ./sp.sh
 }
 
 function warpplus(){
@@ -342,7 +344,7 @@ sudo reboot
 function BBR(){
 if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
 red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
-sleep 2s
+sleep 3s
 start_menu
 else 
 echo "net.core.default_qdisc=fq" >> /etc/sysctl.conf
@@ -361,95 +363,21 @@ yum -y autoremove wireguard-tools wireguard-dkms
 else 
 apt -y autoremove wireguard-tools wireguard-dkms
 fi
-sed -i '/sp1.sh/d' /var/spool/cron/root >/dev/null 2>&1
-sed -i '/sp1.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
+sed -i '/sp.sh/d' /var/spool/cron/root >/dev/null 2>&1
+sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
-rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf sp1.sh ucore.sh CFwarp.sh
+rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf sp.sh ucore.sh CFwarp.sh
 green "WARP卸载完成"
 }
 
 function c1warp(){
 wg-quick down wgcf
-v44=`wget -T1 -t1 -qO- -4 ip.gs`
-if [[ -n ${v44} ]]; then
-gj4=`curl -s4 https://ip.gs/country-iso`
-g4=$(eval echo \$$gj4)
-WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
-case ${WARPIPv4Status} in 
-plus) 
-WARPIPv4Status=$(green "WARP+PLUS已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
-;;  
-on) 
-WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
-;; 
-off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在区域：$g4")
-esac 
-else
-WARPIPv4Status=$(red "不存在IPV4地址 ")
-fi 
-v66=`wget -T1 -t1 -qO- -6 ip.gs`
-if [[ -n ${v66} ]]; then 
-gj6=`curl -s6 https://ip.gs/country-iso`
-g6=$(eval echo \$$gj6)
-WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
-case ${WARPIPv6Status} in 
-plus) 
-WARPIPv6Status=$(green "WARP+PLUS已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-;;  
-on) 
-WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-;; 
-off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-esac 
-else
-WARPIPv6Status=$(red "不存在IPV6地址 ")
-fi 
-blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
-blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+green "临时关闭WARP成功"
 }
 
 function owarp(){
 wg-quick up wgcf
-v44=`wget -T1 -t1 -qO- -4 ip.gs`
-if [[ -n ${v44} ]]; then
-gj4=`curl -s4 https://ip.gs/country-iso`
-g4=$(eval echo \$$gj4)
-WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
-case ${WARPIPv4Status} in 
-plus) 
-WARPIPv4Status=$(green "WARP+PLUS已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
-;;  
-on) 
-WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
-;; 
-off) 
-WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在区域：$g4")
-esac 
-else
-WARPIPv4Status=$(red "不存在IPV4地址 ")
-fi 
-v66=`wget -T1 -t1 -qO- -6 ip.gs`
-if [[ -n ${v66} ]]; then 
-gj6=`curl -s6 https://ip.gs/country-iso`
-g6=$(eval echo \$$gj6)
-WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
-case ${WARPIPv6Status} in 
-plus) 
-WARPIPv6Status=$(green "WARP+PLUS已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-;;  
-on) 
-WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-;; 
-off) 
-WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
-esac 
-else
-WARPIPv6Status=$(red "不存在IPV6地址 ")
-fi 
-blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
-blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+green "恢复开启WARP成功"
 }
 
 function macka(){
@@ -522,7 +450,7 @@ function start_menu(){
     
     green " 14. 获取WARP+账户无限刷流量 "
     
-    green " 15. 手动刷新WARP的IP(WARP防失联)"
+    green " 15. 手动无限刷新WARP的IP(WARP防失联)"
     
     green " 16. 卸载WARP功能 "
     
@@ -556,10 +484,10 @@ function start_menu(){
            Netflix
 	;;    
         5 )
-           ABC1=${ud4} && ABC2=${c3} && ABC3=${c2} && ABC4=${c5}; ins
+           ABC1=${ud4} && ABC2=${c2} && ABC3=${c3} && ABC4=${c5}; ins
 	;;
         6 )
-           ABC1=${c3} && ABC2=${c1} && ABC3=${c5}}; ins
+           ABC1=${c1} && ABC2=${c3} && ABC3=${c5}; ins
 	;;
         7 )
            ABC1=${ud4} && ABC2=${c3} && ABC3=${c5}; ins
