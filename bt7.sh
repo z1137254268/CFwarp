@@ -230,7 +230,8 @@ echo $ABC3 | sh
 echo $ABC4 | sh
 mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf >/dev/null 2>&1
 mv -f wgcf-account.toml /etc/wireguard/wgcf-account.toml >/dev/null 2>&1
-unset WARPIPv4Status WARPIPv6Status 
+
+source ~/.bashrc
 wg-quick up wgcf >/dev/null 2>&1
 v4=$(wget -T1 -t1 -qO- -4 ip.gs)
 v6=$(wget -T1 -t1 -qO- -6 ip.gs)
