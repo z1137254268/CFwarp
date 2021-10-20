@@ -142,7 +142,7 @@ white "------------------------------------------"
 
 before_start_menu() {
 echo && echo -n -e "按回车返回主菜单" && read temp
-bash CFwarp.sh
+bash bt16.sh
 }
 
 function ins(){
