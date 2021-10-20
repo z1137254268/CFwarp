@@ -228,10 +228,9 @@ echo $ABC1 | sh
 echo $ABC2 | sh
 echo $ABC3 | sh
 echo $ABC4 | sh
-
 mv -f wgcf-profile.conf /etc/wireguard/wgcf.conf >/dev/null 2>&1
 mv -f wgcf-account.toml /etc/wireguard/wgcf-account.toml >/dev/null 2>&1
-
+unset WARPIPv4Status WARPIPv6Status 
 wg-quick up wgcf >/dev/null 2>&1
 v4=$(wget -T1 -t1 -qO- -4 ip.gs)
 v6=$(wget -T1 -t1 -qO- -6 ip.gs)
@@ -270,7 +269,6 @@ fi
 green "设置完成"
 
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
-. ~/.bashrc
 green "安装结束，当前WARP及IP状态如下 "
 blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
