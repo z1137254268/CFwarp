@@ -140,6 +140,11 @@ blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 white "------------------------------------------"
 }
 
+before_start_menu() {
+echo && echo -n -e "${yellow}按回车返回主菜单" && read temp
+start_menu
+}
+
 function ins(){
 wg-quick down wgcf >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
@@ -270,13 +275,58 @@ fi
 green "设置完成"
 
 [[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
+v44=`wget -T1 -t1 -qO- -4 ip.gs`
+if [[ -n ${v44} ]]; then
+gj4=`curl -s4 https://ip.gs/country-iso`
+g4=$(eval echo \$$gj4)
+WARPIPv4Status=$(curl -s4 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
+case ${WARPIPv4Status} in 
+plus) 
+WARPIPv4Status=$(green "WARP+PLUS已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
+;;  
+on) 
+WARPIPv4Status=$(green "WARP已开启，当前IPV4地址：$v44 ，IP所在区域：$g4 ") 
+;; 
+off) 
+WARPIPv4Status=$(yellow "WARP未开启，当前IPV4地址：$v44 ，IP所在区域：$g4")
+esac 
+else
+WARPIPv4Status=$(red "不存在IPV4地址 ")
+fi 
+
+v66=`wget -T1 -t1 -qO- -6 ip.gs`
+if [[ -n ${v66} ]]; then 
+gj6=`curl -s6 https://ip.gs/country-iso`
+g6=$(eval echo \$$gj6)
+WARPIPv6Status=$(curl -s6 https://www.cloudflare.com/cdn-cgi/trace | grep warp | cut -d= -f2) 
+case ${WARPIPv6Status} in 
+plus) 
+WARPIPv6Status=$(green "WARP+PLUS已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
+;; 
+on) 
+WARPIPv6Status=$(green "WARP已开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
+;; 
+off) 
+WARPIPv6Status=$(yellow "WARP未开启，当前IPV6地址：$v66 ，IP所在区域：$g6 ") 
+esac 
+else
+WARPIPv6Status=$(red "不存在IPV6地址 ")
+fi 
+
 green "安装结束，当前WARP及IP状态如下 "
 blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function warpip(){
 chmod +x sp.sh && ./sp.sh
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function warpplus(){
@@ -287,10 +337,16 @@ apt -y install python3
 fi
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/warp-plus/wp.py
 python3 wp.py
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function upcore(){
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/ucore.sh && chmod +x ucore.sh && ./ucore.sh
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function iptables(){
@@ -314,6 +370,9 @@ sysctl -p
 lsmod | grep bbr
 green "安装原生BBR加速成功"
 fi
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function cwarp(){
@@ -329,16 +388,25 @@ sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
 [[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf sp.sh ucore.sh CFwarp.sh
 green "WARP卸载完成"
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function c1warp(){
 wg-quick down wgcf
 green "临时关闭WARP成功"
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function owarp(){
 wg-quick up wgcf
 green "恢复开启WARP成功"
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function macka(){
@@ -364,6 +432,9 @@ wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.61_
 elif [[ ${bit} == "aarch64" ]]; then
 wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.61_linux_arm64 && chmod +x nf && clear && ./nf -method full
 fi
+if [[ $# == 0 ]]; then
+        before_start_menu
+    fi
 }
 
 function up4(){
