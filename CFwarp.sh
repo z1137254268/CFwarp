@@ -139,6 +139,11 @@ blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 white "------------------------------------------"
 }
 
+back_start_menu() {
+echo && echo -n -e "按回车返回主菜单" && read temp
+bash CFwarp.sh
+}
+
 function ins(){
 wg-quick down wgcf >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
@@ -312,10 +317,17 @@ fi
 green "安装结束，当前WARP及IP状态如下 "
 blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
+
+if [[ $# == 0 ]]; then
+back_start_menu
+fi
 }
 
 function warpip(){
 chmod +x sp.sh && ./sp.sh
+if [[ $# == 0 ]]; then
+back_start_menu
+fi
 }
 
 function warpplus(){
@@ -326,10 +338,16 @@ apt -y install python3
 fi
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/warp-plus/wp.py
 python3 wp.py
+if [[ $# == 0 ]]; then
+back_start_menu
+fi
 }
 
 function upcore(){
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/ucore.sh && chmod +x ucore.sh && ./ucore.sh
+if [[ $# == 0 ]]; then
+back_start_menu
+fi
 }
 
 function iptables(){
@@ -353,6 +371,9 @@ sysctl -p
 lsmod | grep bbr
 green "安装原生BBR加速成功"
 fi
+if [[ $# == 0 ]]; then
+back_start_menu
+fi
 }
 
 function cwarp(){
@@ -373,11 +394,17 @@ green "WARP卸载完成"
 function c1warp(){
 wg-quick down wgcf
 green "临时关闭WARP成功"
+if [[ $# == 0 ]]; then
+back_start_menu
+fi
 }
 
 function owarp(){
 wg-quick up wgcf
 green "恢复开启WARP成功"
+if [[ $# == 0 ]]; then
+back_start_menu
+fi
 }
 
 function macka(){
@@ -402,6 +429,9 @@ if [[ ${bit} == "x86_64" ]]; then
 wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.61_linux_amd64 && chmod +x nf && clear && ./nf -method full      
 elif [[ ${bit} == "aarch64" ]]; then
 wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.61_linux_arm64 && chmod +x nf && clear && ./nf -method full
+fi
+if [[ $# == 0 ]]; then
+back_start_menu
 fi
 }
 
