@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
-export PATH=$PATH:/usr/local/bin
+PATH=/bin:/sbin:/usr/bin:/usr/sbin:/usr/local/bin:/usr/local/sbin:~/bin
+export PATH
 
 red(){
     echo -e "\033[31m\033[01m$1\033[0m"
