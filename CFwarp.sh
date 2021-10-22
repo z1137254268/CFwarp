@@ -275,8 +275,6 @@ systemctl restart cron.service
 fi
 green "设置完成"
 
-[[ -e /etc/gai.conf ]] && [[ $(grep '^[ ]*precedence[ ]*::ffff:0:0/96[ ]*100' /etc/gai.conf) ]] || echo 'precedence ::ffff:0:0/96  100' >> /etc/gai.conf
-
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
 if [[ -n ${v44} ]]; then
 gj4=`curl -s4 https://ip.gs/country-iso`
