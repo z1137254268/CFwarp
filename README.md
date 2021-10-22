@@ -1,6 +1,6 @@
 ### 公测！！
 
-### 正式支持hax的纯v6的kvm与openvz vps！
+### 2021.10.22更新：正式支持hax的纯v6的kvm与openvz，注意：openvz请先在网页后台开启tun后重启vps
 
 ### 2021.10.6更新内容
 
