@@ -358,7 +358,7 @@ sudo reboot
 }
 
 function BBR(){
-if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
+if [[ ${vi} == " lxc" || ${vi} == " openvz" ]]; then
 red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
 sleep 3s
 start_menu
