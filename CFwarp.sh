@@ -77,7 +77,7 @@ rv4=`ip a | grep global | awk 'NR==1 {print $2}' | cut -d'/' -f1`
 rv6=`ip a | grep inet6 | awk 'NR==2 {print $2}' | cut -d'/' -f1`
 op=`hostnamectl | grep -i Operating | awk -F ':' '{print $2}'`
 vs=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
-vi=` systemd-detect-virt`
+vi=`systemd-detect-virt`
 AE="阿联酋";AU="澳大利亚";BR="巴西";CA="加拿大";CH="瑞士";CL="智利";CN="中国";DE="德国";ES="西班牙";FI="芬兰";FR="法国";HK="香港";ID="印尼";IE="爱尔兰";IL="以色列";IN="印度";IT="意大利";JP="日本";KR="韩国";MY="马来西亚";NL="荷兰";NZ="新西兰";PH="菲律宾";RU="俄罗斯";SA="沙特";SE="瑞典";SG="新加坡";TW="台湾";UK="英国";US="美国";VN="越南";ZA="南非"
 
 v44=`wget -T1 -t1 -qO- -4 ip.gs`
@@ -134,7 +134,7 @@ yellow " VPS相关信息如下："
 blue " 操作系统名称 -$op "
 blue " 系统内核版本 - $version " 
 blue " CPU架构名称  - $bit "
-blue " 虚拟架构类型 -$vi "
+blue " 虚拟架构类型 - $vi "
 white "------------------------------------------"
 blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
