@@ -23,7 +23,7 @@ red "你的VPS内核版本大于5.6,无须升级！"
 exit 0
 fi
 
-if [[ ${vi} == " lxc" || ${vi} == " OpenVZ" ]]; then
+if [[ ${vi} == " lxc" || ${vi} == " openvz" ]]; then
 red "你的VPS为lxc或openvz架构，无法升级内核！"
 exit 0
 fi
