@@ -346,9 +346,6 @@ fi
 
 function upcore(){
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/ucore.sh && chmod +x ucore.sh && ./ucore.sh
-if [[ $# == 0 ]]; then
-back_start_menu
-fi
 }
 
 function iptables(){
