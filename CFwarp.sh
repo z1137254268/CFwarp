@@ -382,7 +382,6 @@ apt -y autoremove wireguard-tools wireguard-dkms
 fi
 sed -i '/sp.sh/d' /var/spool/cron/root >/dev/null 2>&1
 sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
-[[ -e /etc/gai.conf ]] && sed -i '/^precedence[ ]*::ffff:0:0\/96[ ]*100/d' /etc/gai.conf
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf sp.sh ucore.sh CFwarp.sh
 green "WARP卸载完成"
 }
