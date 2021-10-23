@@ -45,7 +45,7 @@ release="Ubuntu"
 elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
 release="Centos"
 else 
-red " 不支持你当前系统，请选择使用Ubuntu,Debain,Centos系统 "
+red " 不支持你当前系统，请选择使用Ubuntu,Debian,Centos系统 "
 rm -f CFwarp.sh
 exit 0
 fi
