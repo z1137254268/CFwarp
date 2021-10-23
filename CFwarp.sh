@@ -75,6 +75,7 @@ if [[ $TUN =~ 'permitted' ]]; then
 red "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！脚本退出！"
 exit 0
 fi
+fi
 
 if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
 red "当前为lxc/openvz VPS，检测是否启用TUN，反馈如下 cat: /dev/net/tun:………… " 
