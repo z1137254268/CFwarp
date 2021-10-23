@@ -14,7 +14,7 @@ blue(){
     echo -e "\033[36m\033[01m$1\033[0m"
 }
 
-vi=`hostnamectl | grep -i Virtualization | awk -F ':' '{print $2}'`
+vi=`systemd-detect-virt`
 main=`uname  -r | awk -F . '{print $1 }'`
 minor=`uname -r | awk -F . '{print $2}'`
 
@@ -23,7 +23,7 @@ red "你的VPS内核版本大于5.6,无须升级！"
 exit 0
 fi
 
-if [[ ${vi} == " lxc" || ${vi} == " openvz" ]]; then
+if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
 red "你的VPS为lxc或openvz架构，无法升级内核！"
 exit 0
 fi
