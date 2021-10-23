@@ -60,13 +60,13 @@ op=`lsb_release -d | awk -F ':' '{print $2}'`
 vi=`systemd-detect-virt`
 
 if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
-green "检测vps是否开启TUN！"
+green "正检测lxc/openvz架构的vps是否开启TUN………！"
 sleep 2s
 TUN=$(cat /dev/net/tun 2>&1)
 if [[ ${TUN} == "cat: /dev/net/tun: File descriptor in bad state" ]]; then
-green "已启用TUN，支持安装WARP(+)"
+green "已开启TUN，支持安装WARP(+)"
 else
-yellow "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通或后台设置以启用TUN！脚本退出！"
+yellow "未开启TUN，不支持安装WARP(+)，请与VPS厂商沟通或后台设置以开启TUN！脚本退出！"
 exit 1
 fi
 fi
