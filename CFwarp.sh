@@ -24,7 +24,7 @@ rred(){
     echo -e "\033[1;35m\033[01m$1\033[0m"
 }
 
-if [[ $(id -u) != 0 ]]; then
+if [[ $EUID -ne 0 ]]; then
 yellow " 请以root模式运行脚本。"
 rm -f CFwarp.sh
 exit 0
@@ -49,6 +49,27 @@ red " 不支持你当前系统，请选择使用Ubuntu,Debain,Centos系统 "
 rm -f CFwarp.sh
 exit 0
 fi
+
+get_char() {
+    SAVEDSTTY=`stty -g`
+    stty -echo
+    stty cbreak
+    dd if=/dev/tty bs=1 count=1 2> /dev/null
+    stty -raw
+    stty echo
+    stty $SAVEDSTTY
+}
+
+if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
+red "检测lxc/openvz VPS是否启用TUN，反馈如下 cat: /dev/net/tun:………… " 
+$(cat /dev/net/tun) 
+green "注意：显示 << File descriptor in bad state >>，说明已启用TUN，支持安装WARP，恭喜！"
+yellow "注意：显示 << Operation not permitted >>，说明未启用TUN，不支持安装WARP，请联系VPS厂商开通！"
+white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+fi
+green "如已启用TUN，请按任意键继续"
+yellow "如未启用TUN，请按Ctrl+C，退出脚本"
+char=$(get_char)
 
 if ! type curl >/dev/null 2>&1; then 
 if [ $release = "Centos" ]; then
@@ -140,8 +161,6 @@ blue " 操作系统名称 -$op "
 blue " 系统内核版本 - $version " 
 blue " CPU架构名称  - $bit "
 blue " 虚拟架构类型 - $vi "
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-blue " TUN状态 $(cat /dev/net/tun) "
 white "------------------------------------------"
 blue " WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue " WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
