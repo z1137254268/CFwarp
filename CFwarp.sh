@@ -73,7 +73,7 @@ if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
 TUN=$(cat /dev/net/tun | tr A-Z a-z)
 if [[ $TUN =~ 'not permitted' ]]; then
 red "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！脚本退出！"
-exit 0
+exit 1
 fi
 fi
 
