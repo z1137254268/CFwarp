@@ -70,10 +70,10 @@ stty $SAVEDSTTY
 }
 
 if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
-red "检测lxc/openvz VPS是否启用TUN，反馈如下 cat: /dev/net/tun:………… " 
+red "当前为lxc/openvz VPS，检测是否启用TUN，反馈如下 cat: /dev/net/tun:………… " 
 $(cat /dev/net/tun) 
-green "注意：显示 << File descriptor in bad state >>，说明已启用TUN，支持安装WARP，恭喜！"
-yellow "注意：显示 << Operation not permitted >>，说明未启用TUN，不支持安装WARP，请联系VPS厂商开通启用！"
+green "注意：显示 << File descriptor in bad state >>，说明已启用TUN，支持安装WARP(+)，恭喜！"
+yellow "注意：显示 << Operation not permitted >>，说明未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！"
 white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 fi
 green "如已启用TUN，请按任意键继续"
