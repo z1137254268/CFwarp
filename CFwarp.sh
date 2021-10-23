@@ -149,7 +149,7 @@ function ins(){
 wg-quick down wgcf >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 
-if [[ ${vi} == " lxc" || ${vi} == " openvz" ]]; then
+if [[ ${vi} == " lxc" || ${vi} == "openvz" ]]; then
 tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 if [[ -n ${tun} ]]; then
 case ${tun} in 
