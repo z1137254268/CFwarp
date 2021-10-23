@@ -44,6 +44,10 @@ elif cat /proc/version | grep -q -E -i "ubuntu"; then
 release="Ubuntu"
 elif cat /proc/version | grep -q -E -i "centos|red hat|redhat"; then
 release="Centos"
+else 
+red " 不支持你当前系统，请选择使用Ubuntu,Debain,Centos系统 "
+rm -f CFwarp.sh
+exit 0
 fi
 
 if ! type curl >/dev/null 2>&1; then 
@@ -154,10 +158,10 @@ tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 if [[ -n ${tun} ]]; then
 case ${tun} in 
 tun)
-green "lxc或者openvz小鸡已开启TUN，安装wireguard-go模式的WARP(+)"
+green "经检测，你的lxc或者openvz小鸡已加载了TUN，安装wireguard-go模式的WARP(+)"
 esac
 else
-red "你的lxc或者openvz小鸡未开启TUN，无法启动warp(+)，自动退出"
+red "经检测，你的lxc或者openvz小鸡未开启TUN，无法安装warp(+)，自动退出"
 exit 0
 fi
 fi
@@ -197,10 +201,6 @@ apt update -y
 elif [ $release = "Ubuntu" ]; then
 apt update -y  
 apt -y --no-install-recommends install net-tools iproute2 openresolv dnsutils wireguard-tools			
-else 
-red " 不支持你当前系统，请选择Ubuntu,Debain,Centos系统 "
-rm -f CFwarp.sh
-exit 1
 fi
 	
 if [[ ${bit} == "x86_64" ]]; then
@@ -213,7 +213,7 @@ wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wiregu
 fi
 
 mkdir -p /etc/wireguard/ >/dev/null 2>&1
-yellow "执行申请WARP账户中……过程可能会多次提示：429 Too Many Requests，请耐心等待。"
+yellow "执行申请WARP账户过程中可能会多次提示：429 Too Many Requests，请耐心等待。"
 echo | wgcf register
 until [[ -e wgcf-account.toml ]]
 do
@@ -382,7 +382,7 @@ apt -y autoremove wireguard-tools wireguard-dkms
 fi
 sed -i '/sp.sh/d' /var/spool/cron/root >/dev/null 2>&1
 sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
-rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf sp.sh ucore.sh CFwarp.sh
+rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf sp.sh ucore.sh nf CFwarp.sh
 green "WARP卸载完成"
 }
 
