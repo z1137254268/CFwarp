@@ -59,18 +59,6 @@ rv6=`ip a | grep inet6 | awk 'NR==2 {print $2}' | cut -d'/' -f1`
 op=`lsb_release -d | awk -F ':' '{print $2}'`
 vi=`systemd-detect-virt`
 
-if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
-green "正检测lxc/openvz架构的vps是否开启TUN………！"
-sleep 2s
-TUN=$(cat /dev/net/tun 2>&1)
-if [[ ${TUN} == "cat: /dev/net/tun: File descriptor in bad state" ]]; then
-green "已开启TUN，支持安装WARP(+)"
-else
-yellow "未开启TUN，不支持安装WARP(+)，请与VPS厂商沟通或后台设置以开启TUN！脚本退出！"
-exit 1
-fi
-fi
-
 if ! type curl >/dev/null 2>&1; then 
 if [ $release = "Centos" ]; then
 yellow "curl 未安装，安装中 "
@@ -165,6 +153,18 @@ bash CFwarp.sh
 function ins(){
 wg-quick down wgcf >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
+
+if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
+green "正在检测lxc/openvz架构的vps是否开启TUN………！"
+sleep 2s
+TUN=$(cat /dev/net/tun 2>&1)
+if [[ ${TUN} == "cat: /dev/net/tun: File descriptor in bad state" ]]; then
+green "检测完毕：已开启TUN，支持安装wireguard-go模式的WARP(+)，继续……"
+else
+yellow "检测完毕：未开启TUN，不支持安装WARP(+)，请与VPS厂商沟通或后台设置以开启TUN，脚本退出！"
+exit 1
+fi
+fi
 
 if [[ ${vi} == "lxc" ]]; then
 if [ $release = "Centos" ]; then
