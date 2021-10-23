@@ -1,6 +1,6 @@
 ### 公测！！
 
-### 2021.10.23更新：加入对openvz与lxc vps是否启用TUN的用户判断机制。。
+### 2021.10.23更新：加入对openvz与lxc vps是否启用TUN的判断机制。。
 
 ### 2021.10.22更新：正式支持hax站的纯ipv6的kvm与openvz，注意：openvz请先在网页后台开启tun后重启vps
 
