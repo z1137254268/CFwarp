@@ -172,7 +172,7 @@ if [ $release = "Centos" ]; then
 yum -y install epel-release
 yum -y install curl net-tools wireguard-tools	
 if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then 
-if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
+if [[ ${vi} == "kvm" || ${vi} == "xen" || ${vi} == "microsoft" ]]; then
 yellow "内核小于5.6版本，安装WARP内核模块模式"
 curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
 yum -y install epel-release wireguard-dkms
@@ -187,7 +187,7 @@ echo "deb http://deb.debian.org/debian $(lsb_release -sc)-backports main" | tee 
 apt update -y
 apt -y --no-install-recommends install net-tools iproute2 openresolv dnsutils wireguard-tools               		
 if [ "$main" -lt 5 ]|| [ "$minor" -lt 6 ]; then 
-if [[ ${vi} == " kvm" || ${vi} == " xen" || ${vi} == " microsoft" ]]; then
+if [[ ${vi} == "kvm" || ${vi} == "xen" || ${vi} == "microsoft" ]]; then
 yellow "内核小于5.6版本，安装WARP内核模块模式"
 apt -y --no-install-recommends install linux-headers-$(uname -r);apt -y --no-install-recommends install wireguard-dkms
 fi
