@@ -61,11 +61,12 @@ vi=`systemd-detect-virt`
 
 if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
 green "检测vps是否开启TUN！"
+sleep 2s
 TUN=$(cat /dev/net/tun 2>&1)
 if [[ ${TUN} == "cat: /dev/net/tun: File descriptor in bad state" ]]; then
 green "已启用TUN，支持安装WARP(+)"
 else
-yellow "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！脚本退出！"
+yellow "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通或后台设置以启用TUN！脚本退出！"
 exit 1
 fi
 fi
@@ -143,8 +144,6 @@ c4="sed -i 's/engage.cloudflareclient.com/2606:4700:d0::a29f:c001/g' wgcf-profil
 c5="sed -i 's/1.1.1.1/8.8.8.8,2001:4860:4860::8888/g' wgcf-profile.conf"
 c6="sed -i 's/1.1.1.1/2001:4860:4860::8888,8.8.8.8/g' wgcf-profile.conf"
 
-
-
 Print_ALL_Status_menu() {
 white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 yellow " VPS相关信息如下："
@@ -166,19 +165,6 @@ bash CFwarp.sh
 function ins(){
 wg-quick down wgcf >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
-
-if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
-tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
-if [[ -n ${tun} ]]; then
-case ${tun} in 
-tun)
-green "检测经，你的lxc或者openvz小鸡已加载了TUN，安装wireguard-go模式的WARP(+)"
-esac
-else
-red "经检测，你的lxc或者openvz小鸡未开启TUN，无法安装warp(+)，自动退出"
-exit 0
-fi
-fi
 
 if [[ ${vi} == "lxc" ]]; then
 if [ $release = "Centos" ]; then
