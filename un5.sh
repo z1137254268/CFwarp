@@ -10,6 +10,8 @@ yellow(){
     echo -e "\033[33m\033[01m$1\033[0m"
 }
 
+vi=`systemd-detect-virt`
+
 get_char() {
     SAVEDSTTY=`stty -g`
     stty -echo
@@ -27,6 +29,6 @@ yellow "注意：如上反馈内容末尾显示 << Operation not permitted >>，
 green "注意：如上反馈内容末尾显示 << File descriptor in bad state >>，说明已启用TUN，支持安装WARP，恭喜！"
 white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 fi
-echo "如已启用TUN，请按任意键继续。如未启用TUN，请按Ctrl+C，退出脚本"
+red "如已启用TUN，请按任意键继续。如未启用TUN，请按Ctrl+C，退出脚本"
 char=$(get_char)
 
