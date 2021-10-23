@@ -70,7 +70,7 @@ stty $SAVEDSTTY
 }
 
 if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
-TUN=$(cat /dev/net/tun)
+TUN=$(cat /dev/net/tun | tr A-Z a-z)
 [[ $TUN =~ 'permitted' ]]; then
 red "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！脚本退出！"
 exit 0
