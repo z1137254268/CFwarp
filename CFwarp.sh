@@ -61,12 +61,12 @@ vi=`systemd-detect-virt`
 
 if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
 green "检测vps是否开启TUN！"
-TUN=$(cat /dev/net/tun 2>&1 | tr A-Z a-z)
-if [[ $TUN =~ 'not permit' ]]; then
-red "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！脚本退出！"
-exit 1
-else
+TUN=$(cat /dev/net/tun 2>&1)
+if [[ ${TUN} == "cat: /dev/net/tun: File descriptor in bad state" ]]; then
 green "已启用TUN，支持安装WARP(+)"
+else
+yellow "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！脚本退出！"
+exit 1
 fi
 fi
 
