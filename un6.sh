@@ -9,7 +9,12 @@ green(){
 yellow(){
     echo -e "\033[33m\033[01m$1\033[0m"
 }
-
+red(){
+    echo -e "\033[31m\033[01m$1\033[0m"
+}
+white(){
+    echo -e "\033[1;37m\033[01m$1\033[0m"
+}
 vi=`systemd-detect-virt`
 
 get_char() {
