@@ -28,12 +28,13 @@ get_char() {
 }
 
 if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
-bblue "lxc/openvz小鸡TUN是否启用反馈如下" 
+red "lxc/openvz小鸡TUN是否启用反馈如下 cat: /dev/net/tun:………… " 
 $(cat /dev/net/tun) 
-yellow "注意：如上反馈内容末尾显示 << Operation not permitted >>，说明未启用TUN，不支持安装WARP，请联系VPS厂商开通！"
-green "注意：如上反馈内容末尾显示 << File descriptor in bad state >>，说明已启用TUN，支持安装WARP，恭喜！"
+green "注意：显示 << File descriptor in bad state >>，说明已启用TUN，支持安装WARP，恭喜！"
+yellow "注意：显示 << Operation not permitted >>，说明未启用TUN，不支持安装WARP，请联系VPS厂商开通！"
 white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
 fi
-red "如已启用TUN，请按任意键继续。如未启用TUN，请按Ctrl+C，退出脚本"
+green "如已启用TUN，请按任意键继续"
+yellow "如未启用TUN，请按Ctrl+C，退出脚本"
 char=$(get_char)
 
