@@ -149,7 +149,7 @@ function ins(){
 wg-quick down wgcf >/dev/null 2>&1
 rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf
 
-if [[ ${vi} == " lxc" || ${vi} == "openvz" ]]; then
+if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
 tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 if [[ -n ${tun} ]]; then
 case ${tun} in 
@@ -162,7 +162,7 @@ exit 0
 fi
 fi
 
-if [[ ${vi} == " lxc" ]]; then
+if [[ ${vi} == "lxc" ]]; then
 if [ $release = "Centos" ]; then
 echo -e nameserver 2001:67c:2960:6464:6464:6464:6464:6464 > /etc/resolv.conf
 fi
@@ -208,7 +208,7 @@ wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_amd64 -O /usr/local/
 elif [[ ${bit} == "aarch64" ]]; then
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wgcf_2.2.9_arm64 -O /usr/local/bin/wgcf && chmod +x /usr/local/bin/wgcf
 fi
-if [[ ${vi} == " lxc" || ${vi} == " openvz" ]]; then
+if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
 wget -N https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/wireguard-go -O /usr/bin/wireguard-go && chmod +x /usr/bin/wireguard-go
 fi
 
@@ -356,7 +356,7 @@ sudo reboot
 }
 
 function BBR(){
-if [[ ${vi} == " lxc" || ${vi} == " openvz" ]]; then
+if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
 red " 不支持当前VPS的架构，请使用KVM等主流架构的VPS "
 sleep 3s
 start_menu
