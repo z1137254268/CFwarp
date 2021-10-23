@@ -59,33 +59,15 @@ rv6=`ip a | grep inet6 | awk 'NR==2 {print $2}' | cut -d'/' -f1`
 op=`lsb_release -d | awk -F ':' '{print $2}'`
 vi=`systemd-detect-virt`
 
-get_char() {
-SAVEDSTTY=`stty -g`
-stty -echo
-stty cbreak
-dd if=/dev/tty bs=1 count=1 2> /dev/null
-stty -raw
-stty echo
-stty $SAVEDSTTY
-}
-
 if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
+green "检测vps是否开启TUN！"
 TUN=$(cat /dev/net/tun 2>&1 | tr A-Z a-z)
 if [[ $TUN =~ 'not permit' ]]; then
 red "未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！脚本退出！"
 exit 1
+else
+green "已启用TUN，支持安装WARP(+)"
 fi
-fi
-
-if [[ ${vi} == "lxc" || ${vi} == "openvz" ]]; then
-red "当前为lxc/openvz VPS，检测是否启用TUN，反馈如下 cat: /dev/net/tun:………… " 
-$(cat /dev/net/tun) 
-green "注意：显示 << File descriptor in bad state >>，说明已启用TUN，支持安装WARP(+)，恭喜！"
-yellow "注意：显示 << Operation not permitted >>，说明未启用TUN，不支持安装WARP(+)，请联系VPS厂商开通TUN！"
-white "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-green "如已启用TUN，请按任意键继续"
-yellow "如未启用TUN，请按Ctrl+C，退出脚本"
-char=$(get_char)
 fi
 
 if ! type curl >/dev/null 2>&1; then 
@@ -190,7 +172,7 @@ tun=$(lsmod | grep tun | awk 'NR==1 {print $1}')
 if [[ -n ${tun} ]]; then
 case ${tun} in 
 tun)
-green "经检测，你的lxc或者openvz小鸡已加载了TUN，安装wireguard-go模式的WARP(+)"
+green "检测经，你的lxc或者openvz小鸡已加载了TUN，安装wireguard-go模式的WARP(+)"
 esac
 else
 red "经检测，你的lxc或者openvz小鸡未开启TUN，无法安装warp(+)，自动退出"
