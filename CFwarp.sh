@@ -437,9 +437,206 @@ function up4(){
 wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/main/CFwarp.sh && chmod +x CFwarp.sh && ./CFwarp.sh
 }
 
-#主菜单
 function start_menu(){
-    clear
+systemctl stop wg-quick@wgcf
+v44=`ip route get 162.159.192.1 2>/dev/null | grep -oP 'src \K\S+'`
+v66=`wget -T1 -t1 -qO- -6 ip.gs`
+if [[ -n ${v44} && -n ${v66} ]]; then 
+clear
+    bblue " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃" 
+    
+    red " 切记：进入脚本快捷方式 bash CFwarp.sh "
+    
+    white " ==================一、VPS相关调整选择（更新中）==========================================" 
+    
+    green " 1.  永久开启甲骨文VPS的ubuntu系统所有端口 "
+    
+    green " 2.  为5.6以下系统内核更新至5.6以上 "
+    
+    green " 3.  开启原生BBR加速 "
+    
+    green " 4.  检测奈飞Netflix是否解锁 "
+    
+    white " ==================二、WARP功能选择（更新中）======================================"
+    
+    green " 5. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV4               "
+    
+    green " 6. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV6      "
+    
+    green " 7. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV4+虚拟IPV6               "
+    
+    white " ---------------------------------------------------------------------------------"
+    
+    green " 8. 获取WARP+账户无限刷流量 "
+    
+    green " 9. 手动无限刷新WARP的IP(WARP防失联)"
+    
+    green " 10. 卸载WARP功能 "
+    
+    green " 11. 临时关闭WARP功能 "
+    
+    green " 12. 临时关闭后开启WARP功能 "
+    
+    white " ==================三、代理协议脚本选择（更新中）==========================================="
+    
+    green " 13.使用mack-a脚本（支持Xray, V2ray） "
+    
+    green " 14.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
+    
+    white " ============================================================================================="
+    
+    red " 0. 退出脚本 "
+    Print_ALL_Status_menu
+    echo
+    read -p "请输入数字:" menuNumberInput
+    case "$menuNumberInput" in     
+        1 )
+           iptables
+	;;
+        2 )
+           upcore
+	;;
+        3 )
+           BBR
+	;;
+	4 )
+           Netflix
+	;;    
+      
+	5 )
+           ABC1=${ud4} && ABC2=${c2} && ABC3=${c5}; ins
+	;;
+	6 )
+           ABC1=${ud6} && ABC2=${c1} && ABC3=${c5}; ins
+	;;
+	7 )
+           ABC1=${ud4ud6} && ABC2=${c5}; ins
+	;;
+	8 )
+           warpplus
+	;;
+	9 )
+           warpip
+	;;	
+	10 )
+           cwarp
+	;;
+	11 )
+           c1warp
+	;;
+	12 )
+           owarp
+	;;
+	13 )
+           macka
+	;;
+	14 )
+           phlinhng
+	;;
+        0 )
+           exit 1
+        ;;
+  esac
+  
+elif [[ -n ${v66} && -z ${v44} ]]; then
+clear
+    bblue " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃" 
+    
+    red " 切记：进入脚本快捷方式 bash CFwarp.sh "
+    
+    white " ==================一、VPS相关调整选择（更新中）==========================================" 
+    
+    green " 1.  永久开启甲骨文VPS的ubuntu系统所有端口 "
+    
+    green " 2.  为5.6以下系统内核更新至5.6以上 "
+    
+    green " 3.  开启原生BBR加速 "
+    
+    green " 4.  检测奈飞Netflix是否解锁 "
+    
+    white " ==================二、WARP功能选择（更新中）======================================"
+    
+    green " 5.  VPS纯IPV6        >> 添加WARP虚拟IPV4               "
+    
+    green " 6.  VPS纯IPV6        >> 添加WARP虚拟IPV6     "
+    
+    green " 7. VPS纯IPV6        >> 添加WARP虚拟IPV4+虚拟IPV6               " 
+    
+    white " ---------------------------------------------------------------------------------"
+    
+    green " 8. 获取WARP+账户无限刷流量 "
+    
+    green " 9. 手动无限刷新WARP的IP(WARP防失联)"
+    
+    green " 10. 卸载WARP功能 "
+    
+    green " 11. 临时关闭WARP功能 "
+    
+    green " 12. 临时关闭后开启WARP功能 "
+    
+    white " ==================三、代理协议脚本选择（更新中）==========================================="
+    
+    green " 13.使用mack-a脚本（支持Xray, V2ray） "
+    
+    green " 14.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
+    
+    white " ============================================================================================="
+    
+    red " 0. 退出脚本 "
+    Print_ALL_Status_menu
+    echo
+    read -p "请输入数字:" menuNumberInput
+    case "$menuNumberInput" in     
+        1 )
+           iptables
+	;;
+        2 )
+           upcore
+	;;
+        3 )
+           BBR
+	;;
+	4 )
+           Netflix
+	;;    
+       
+        5 )
+           ABC1=${c4} && ABC2=${c2} && ABC3=${c5}; ins
+	;;
+        6 )
+           ABC1=${ud6} && ABC2=${c1} &&ABC3=${c4} ABC4=${c6}; ins
+	;;
+	7 )   
+	   ABC1=${ud6} && ABC2=${c4} && ABC3=${c5}; ins
+	;;
+  
+	8 )
+           warpplus
+	;;
+	9 )
+           warpip
+	;;	
+	10 )
+           cwarp
+	;;
+	11 )
+           c1warp
+	;;
+	12 )
+           owarp
+	;;
+	13 )
+           macka
+	;;
+	14 )
+           phlinhng
+	;;
+        0 )
+           exit 1
+        ;;
+  esac
+elif [[ -z ${v66} && -n ${v44} ]]; then
+clear
     bblue " 详细说明 https://github.com/kkkyg/CFwarp  YouTube频道：甬哥侃侃侃" 
     
     red " 切记：进入脚本快捷方式 bash CFwarp.sh "
@@ -461,36 +658,24 @@ function start_menu(){
     green " 6.  VPS纯IPV4        >> 添加WARP虚拟IPV6      "
     
     green " 7.  VPS纯IPV4        >> 添加WARP虚拟IPV4+虚拟IPV6              "
-    white " ---------------------------------------------------------------------------------"   
-    green " 8.  VPS纯IPV6        >> 添加WARP虚拟IPV4               "
-    
-    green " 9.  VPS纯IPV6        >> 添加WARP虚拟IPV6     "
-    
-    green " 10. VPS纯IPV6        >> 添加WARP虚拟IPV4+虚拟IPV6               " 
-    white " ---------------------------------------------------------------------------------"
-    green " 11. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV4               "
-    
-    green " 12. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV6      "
-    
-    green " 13. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV4+虚拟IPV6               "
     
     white " ---------------------------------------------------------------------------------"
     
-    green " 14. 获取WARP+账户无限刷流量 "
+    green " 8. 获取WARP+账户无限刷流量 "
     
-    green " 15. 手动无限刷新WARP的IP(WARP防失联)"
+    green " 9. 手动无限刷新WARP的IP(WARP防失联)"
     
-    green " 16. 卸载WARP功能 "
+    green " 10. 卸载WARP功能 "
     
-    green " 17. 临时关闭WARP功能 "
+    green " 11. 临时关闭WARP功能 "
     
-    green " 18. 临时关闭后开启WARP功能 "
+    green " 12. 临时关闭后开启WARP功能 "
     
     white " ==================三、代理协议脚本选择（更新中）==========================================="
     
-    green " 19.使用mack-a脚本（支持Xray, V2ray） "
+    green " 13.使用mack-a脚本（支持Xray, V2ray） "
     
-    green " 20.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
+    green " 14.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
     
     white " ============================================================================================="
     
@@ -520,49 +705,34 @@ function start_menu(){
         7 )
            ABC1=${ud4} && ABC2=${c3} && ABC3=${c5}; ins
 	;;
-        8 )
-           ABC1=${c4} && ABC2=${c2} && ABC3=${c5}; ins
-	;;
-        9 )
-           ABC1=${ud6} && ABC2=${c1} &&ABC3=${c4} ABC4=${c6}; ins
-	;;
-	10 )   
-	   ABC1=${ud6} && ABC2=${c4} && ABC3=${c5}; ins
-	;;
-	11 )
-           ABC1=${ud4} && ABC2=${c2} && ABC3=${c5}; ins
-	;;
-	12 )
-           ABC1=${ud6} && ABC2=${c1} && ABC3=${c5}; ins
-	;;
-	13 )
-           ABC1=${ud4ud6} && ABC2=${c5}; ins
-	;;
-	14 )
+	8 )
            warpplus
 	;;
-	15 )
+	9 )
            warpip
 	;;	
-	16 )
+	10 )
            cwarp
 	;;
-	17 )
+	11 )
            c1warp
 	;;
-	18 )
+	12 )
            owarp
 	;;
-	19 )
+	13 )
            macka
 	;;
-	20 )
+	14 )
            phlinhng
 	;;
         0 )
            exit 1
         ;;
   esac
+else
+echo "无法检测，请向作者反馈"
+fi
+systemctl start wg-quick@wgcf
 }
-
 start_menu "first" 
