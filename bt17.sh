@@ -326,7 +326,7 @@ bash bt17.sh
 }
 
 function warpip(){
-bash sp.sh
+bash sip.sh
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
 bash bt17.sh
