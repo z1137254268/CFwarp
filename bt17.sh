@@ -322,14 +322,14 @@ blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
 
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
-bash CFwarp.sh
+bash bt17.sh
 }
 
 function warpip(){
 chmod +x sp.sh && ./sp.sh
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
-bash CFwarp.sh
+bash bt17.sh
 }
 
 function warpplus(){
@@ -342,7 +342,7 @@ wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/warp-plus/wp.py
 python3 wp.py
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
-bash CFwarp.sh
+bash bt17.sh
 }
 
 function upcore(){
@@ -372,7 +372,7 @@ green "安装原生BBR加速成功"
 fi
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
-bash CFwarp.sh
+bash bt17.sh
 }
 
 function cwarp(){
@@ -394,7 +394,7 @@ wg-quick down wgcf
 green "临时关闭WARP成功"
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
-bash CFwarp.sh
+bash bt17.sh
 }
 
 function owarp(){
@@ -402,7 +402,7 @@ wg-quick up wgcf
 green "恢复开启WARP成功"
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
-bash CFwarp.sh
+bash bt17.sh
 }
 
 function macka(){
@@ -430,7 +430,7 @@ wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.61_
 fi
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
-bash CFwarp.sh
+bash bt17.sh
 }
 
 function up4(){
