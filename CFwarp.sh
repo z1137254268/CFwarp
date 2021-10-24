@@ -456,13 +456,13 @@ clear
     
     green " 4.  检测奈飞Netflix是否解锁 "
     
-    white " ==================二、WARP功能选择（更新中）======================================"
+    white " ==================二、WARP功能选择（原VPS类型：双栈IPV6+IPV4）======================================"
     
-    green " 5. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV4               "
+    green " 5. 添加WARP虚拟IPV4，WARP双栈IP，支持IP分流             "
     
-    green " 6. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV6      "
+    green " 6. 添加WARP虚拟IPV6，WARP双栈IP，支持IP分流      "
     
-    green " 7. VPS双栈IPV4+IPV6 >> 添加WARP虚拟IPV4+虚拟IPV6               "
+    green " 7. 添加WARP虚拟IPV4+IPV6，WARP双栈IP，支持IP分流               "
     
     white " ---------------------------------------------------------------------------------"
     
@@ -540,27 +540,27 @@ clear
     
     white " ==================一、VPS相关调整选择（更新中）==========================================" 
     
-    green " 1.  永久开启甲骨文VPS的ubuntu系统所有端口 "
+    green "  1. 永久开启甲骨文VPS的ubuntu系统所有端口 "
     
-    green " 2.  为5.6以下系统内核更新至5.6以上 "
+    green "  2. 为5.6以下系统内核更新至5.6以上 "
     
-    green " 3.  开启原生BBR加速 "
+    green "  3. 开启原生BBR加速 "
     
-    green " 4.  检测奈飞Netflix是否解锁 "
+    green "  4. 检测奈飞Netflix是否解锁 "
     
-    white " ==================二、WARP功能选择（更新中）======================================"
+    white " ==================二、WARP功能选择（原VPS类型：纯IPV6）======================================"
     
-    green " 5.  VPS纯IPV6        >> 添加WARP虚拟IPV4               "
+    green "  5. 添加WARP虚拟IPV4，WARP双栈IP，支持IP分流               "
     
-    green " 6.  VPS纯IPV6        >> 添加WARP虚拟IPV6     "
+    green "  6. 添加WARP虚拟IPV6，WARP单栈IP（无IPV4），不支持IP分流     "
     
-    green " 7. VPS纯IPV6        >> 添加WARP虚拟IPV4+虚拟IPV6               " 
+    green "  7. 添加WARP虚拟IPV4+IPV6，WARP双栈IP，支持IP分流               " 
     
     white " ---------------------------------------------------------------------------------"
     
-    green " 8. 获取WARP+账户无限刷流量 "
+    green "  8. 获取WARP+账户无限刷流量 "
     
-    green " 9. 手动无限刷新WARP的IP(WARP防失联)"
+    green "  9. 手动无限刷新WARP的IP(WARP防失联)"
     
     green " 10. 卸载WARP功能 "
     
@@ -632,27 +632,27 @@ clear
     
     white " ==================一、VPS相关调整选择（更新中）==========================================" 
     
-    green " 1.  永久开启甲骨文VPS的ubuntu系统所有端口 "
+    green "  1. 永久开启甲骨文VPS的ubuntu系统所有端口 "
     
-    green " 2.  为5.6以下系统内核更新至5.6以上 "
+    green "  2. 为5.6以下系统内核更新至5.6以上 "
     
-    green " 3.  开启原生BBR加速 "
+    green "  3. 开启原生BBR加速 "
     
-    green " 4.  检测奈飞Netflix是否解锁 "
+    green "  4. 检测奈飞Netflix是否解锁 "
     
-    white " ==================二、WARP功能选择（更新中）======================================"
+    white " ==================二、WARP功能选择（原VPS类型：纯IPV4）======================================"
     
-    green " 5.  VPS纯IPV4        >> 添加WARP虚拟IPV4               "
+    green "  5. 添加WARP虚拟IPV4，WARP单栈IP，不支持IP分流               "
     
-    green " 6.  VPS纯IPV4        >> 添加WARP虚拟IPV6      "
+    green "  6. 添加WARP虚拟IPV6，WARP双栈IP，支持IP分流    "
     
-    green " 7.  VPS纯IPV4        >> 添加WARP虚拟IPV4+虚拟IPV6              "
+    green "  7. 添加WARP虚拟IPV4+IPV6，WARP双栈IP，支持IP分流            "
     
     white " ---------------------------------------------------------------------------------"
     
-    green " 8. 获取WARP+账户无限刷流量 "
+    green "  8. 获取WARP+账户无限刷流量 "
     
-    green " 9. 手动无限刷新WARP的IP(WARP防失联)"
+    green "  9. 手动无限刷新WARP的IP(WARP防失联)"
     
     green " 10. 卸载WARP功能 "
     
