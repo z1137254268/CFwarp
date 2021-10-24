@@ -390,11 +390,11 @@ green "WARP卸载完成"
 }
 
 function c1warp(){
+wg-quick down wgcf
 green "临时关闭WARP成功"
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
 bash bt17.sh
-wg-quick down wgcf
 }
 
 function owarp(){
@@ -439,7 +439,7 @@ wget -N --no-check-certificate https://raw.githubusercontent.com/kkkyg/CFwarp/ma
 
 #主菜单
 function start_menu(){
-wg-quick down wgcf >/dev/null 2>&1
+systemctl stop wg-quick@wgcf
 v44=`ip route get 162.159.192.1 2>/dev/null | grep -oP 'src \K\S+'`
 v66=`wget -T1 -t1 -qO- -6 ip.gs`
 if [[ -n ${v44} && -n ${v66} ]]; then 
@@ -734,7 +734,7 @@ clear
 else
 echo "无法检测，请向作者反馈"
 fi
-
+systemctl start wg-quick@wgcf
 
 }
 
