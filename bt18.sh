@@ -734,7 +734,7 @@ clear
 else
 echo "无法检测，请向作者反馈"
 fi
-wg-quick up wgcf >/dev/null 2>&1
+
 
 }
 
