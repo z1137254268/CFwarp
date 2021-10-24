@@ -390,11 +390,10 @@ green "WARP卸载完成"
 }
 
 function c1warp(){
-wg-quick down wgcf
 green "临时关闭WARP成功"
 yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
 char=$(get_char)
-bash bt17.sh
+bash bt17.sh && wg-quick down wgcf
 }
 
 function owarp(){
