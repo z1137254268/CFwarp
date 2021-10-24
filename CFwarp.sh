@@ -257,7 +257,7 @@ wg-quick down wgcf >/dev/null 2>&1
 systemctl restart wg-quick@wgcf
 
 yellow "设置重启VPS时，自动刷新WARP功能"
-wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/sp.sh >/dev/null 2>&1
+wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/CFwarp/sip.sh >/dev/null 2>&1
 ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 if [ ${release} = "Centos" ]; then  
 yum install vixie-cron crontabs >/dev/null 2>&1
@@ -319,15 +319,18 @@ fi
 green "安装结束，当前WARP及IP状态如下 "
 blue "WARP状态+IPv4地址+IP所在区域: ${WARPIPv4Status}"
 blue "WARP状态+IPv6地址+IP所在区域: ${WARPIPv6Status}"
-
-yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
+white " ============================================================================================="
+white "返回主菜单，请按任意键"
+white "退出脚本，请按Ctrl+C"
 char=$(get_char)
 bash CFwarp.sh
 }
 
 function warpip(){
-chmod +x sp.sh && ./sp.sh
-yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
+bash sip.sh
+white " ============================================================================================="
+white "返回主菜单，请按任意键"
+white "退出脚本，请按Ctrl+C"
 char=$(get_char)
 bash CFwarp.sh
 }
@@ -340,9 +343,6 @@ apt -y install python3
 fi
 wget -N --no-check-certificate https://cdn.jsdelivr.net/gh/kkkyg/warp-plus/wp.py
 python3 wp.py
-yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
-char=$(get_char)
-bash CFwarp.sh
 }
 
 function upcore(){
@@ -370,14 +370,16 @@ sysctl -p
 lsmod | grep bbr
 green "安装原生BBR加速成功"
 fi
-yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
+white " ============================================================================================="
+white "返回主菜单，请按任意键"
+white "退出脚本，请按Ctrl+C"
 char=$(get_char)
 bash CFwarp.sh
 }
 
 function cwarp(){
-systemctl disable wg-quick@wgcf >/dev/null 2>&1
 wg-quick down wgcf >/dev/null 2>&1
+systemctl disable wg-quick@wgcf >/dev/null 2>&1
 if [ $release = "Centos" ]; then
 yum -y autoremove wireguard-tools wireguard-dkms
 else 
@@ -385,14 +387,16 @@ apt -y autoremove wireguard-tools wireguard-dkms
 fi
 sed -i '/sp.sh/d' /var/spool/cron/root >/dev/null 2>&1
 sed -i '/sp.sh/d' /var/spool/cron/crontabs/root >/dev/null 2>&1
-rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf sp.sh ucore.sh nf CFwarp.sh
+rm -rf /usr/local/bin/wgcf /etc/wireguard/wgcf.conf /etc/wireguard/wgcf-account.toml /usr/bin/wireguard-go wgcf-account.toml wgcf-profile.conf sip.sh ucore.sh nf CFwarp.sh
 green "WARP卸载完成"
 }
 
 function c1warp(){
 wg-quick down wgcf
 green "临时关闭WARP成功"
-yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
+white " ============================================================================================="
+white "返回主菜单，请按任意键"
+white "退出脚本，请按Ctrl+C"
 char=$(get_char)
 bash CFwarp.sh
 }
@@ -400,7 +404,9 @@ bash CFwarp.sh
 function owarp(){
 wg-quick up wgcf
 green "恢复开启WARP成功"
-yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
+white " ============================================================================================="
+white "返回主菜单，请按任意键"
+white "退出脚本，请按Ctrl+C"
 char=$(get_char)
 bash CFwarp.sh
 }
@@ -413,22 +419,15 @@ sudo iptables -F
 wget -P /root -N --no-check-certificate "https://raw.githubusercontent.com/mack-a/v2ray-agent/master/install.sh" && chmod 700 /root/install.sh && /root/install.sh
 }
 
-function phlinhng(){
-sudo iptables -P INPUT ACCEPT
-sudo iptables -P FORWARD ACCEPT
-sudo iptables -P OUTPUT ACCEPT
-sudo iptables -F
-curl -fsSL https://cdn.jsdelivr.net/gh/phlinhng/v2ray-tcp-tls-web@main/src/xwall.sh -o ~/xwall.sh && bash ~/xwall.sh
-}
-
-
 function Netflix(){
 if [[ ${bit} == "x86_64" ]]; then
 wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.61_linux_amd64 && chmod +x nf && clear && ./nf -method full      
 elif [[ ${bit} == "aarch64" ]]; then
 wget -O nf https://cdn.jsdelivr.net/gh/sjlleo/netflix-verify/CDNRelease/nf_2.61_linux_arm64 && chmod +x nf && clear && ./nf -method full
 fi
-yellow "返回主菜单～请按任意键；退出脚本～请按Ctrl+C"
+white " ============================================================================================="
+white "返回主菜单，请按任意键"
+white "退出脚本，请按Ctrl+C"
 char=$(get_char)
 bash CFwarp.sh
 }
@@ -481,8 +480,6 @@ clear
     
     green " 13.使用mack-a脚本（支持Xray, V2ray） "
     
-    green " 14.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
-    
     white " ============================================================================================="
     
     red " 0. 退出脚本 "
@@ -530,9 +527,6 @@ clear
 	13 )
            macka
 	;;
-	14 )
-           phlinhng
-	;;
         0 )
            exit 1
         ;;
@@ -577,8 +571,6 @@ clear
     white " ==================三、代理协议脚本选择（更新中）==========================================="
     
     green " 13.使用mack-a脚本（支持Xray, V2ray） "
-    
-    green " 14.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
     
     white " ============================================================================================="
     
@@ -628,9 +620,6 @@ clear
 	13 )
            macka
 	;;
-	14 )
-           phlinhng
-	;;
         0 )
            exit 1
         ;;
@@ -674,8 +663,6 @@ clear
     white " ==================三、代理协议脚本选择（更新中）==========================================="
     
     green " 13.使用mack-a脚本（支持Xray, V2ray） "
-    
-    green " 14.使用phlinhng脚本（支持Xray, Trojan-go, SS+v2ray-plugin） "
     
     white " ============================================================================================="
     
@@ -723,15 +710,13 @@ clear
 	13 )
            macka
 	;;
-	14 )
-           phlinhng
-	;;
         0 )
            exit 1
         ;;
   esac
 else
 echo "无法检测，请向作者反馈"
+exit 0
 fi
 systemctl start wg-quick@wgcf
 }
