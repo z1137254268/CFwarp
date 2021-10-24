@@ -22,15 +22,15 @@ rred(){
     echo -e "\033[1;35m\033[01m$1\033[0m"
 }
 AE="阿联酋";AU="澳大利亚";BR="巴西";CA="加拿大";CH="瑞士";CL="智利";CN="中国";DE="德国";ES="西班牙";FI="芬兰";FR="法国";HK="香港";ID="印尼";IE="爱尔兰";IL="以色列";IN="印度";IT="意大利";JP="日本";KR="韩国";MY="马来西亚";NL="荷兰";NZ="新西兰";PH="菲律宾";RU="俄罗斯";SA="沙特";SE="瑞典";SG="新加坡";TW="台湾";UK="英国";US="美国";VN="越南";ZA="南非"
-wg-quick down wgcf
-systemctl restart wg-quick@wgcf
-wg-quick up wgcf
+wg-quick down wgcf >/dev/null 2>&1
+systemctl restart wg-quick@wgcf >/dev/null 2>&1
+wg-quick up wgcf >/dev/null 2>&1
 v4=$(wget -T1 -t1 -qO- -4 ip.gs)
 v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 until [[ -n $v4 || -n $v6 ]]
 do
-wg-quick down wgcf
-wg-quick up wgcf
+wg-quick down wgcf >/dev/null 2>&1
+wg-quick up wgcf >/dev/null 2>&1
 v4=$(wget -T1 -t1 -qO- -4 ip.gs)
 v6=$(wget -T1 -t1 -qO- -6 ip.gs)
 done
